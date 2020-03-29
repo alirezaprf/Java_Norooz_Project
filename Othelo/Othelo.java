@@ -3,76 +3,108 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Othelo {
 
     private JFrame frame;
     private int[][] gameBoard;
-    private boolean playerTurn=true;
-    //if true black moves else white does
+    private boolean playerTurn = true;
+    // if true black moves else white does
     private ActionListener ButtonsAction;
-
-
-
-
+    private ArrayList<JButton> buttons;
     /**
-     * gameBorad Containg Game's Data as int
-     * 0 which is the initial State of every cell = empty
-     * 1 means black
-     * 2 means white 
+     * gameBorad Containg Game's Data as int 0 which is the initial State of every
+     * cell = empty 1 means black 2 means white
      */
 
+    /**
+     * 
+     * @param i y
+     * @param j x
+     * @param type type of board
+     */
+    public void setGameBoard(int i,int j,int type)
+    {
+        gameBoard[i][j]=type;
+        if(type==2)
+            buttons.get(i*8+j).setBackground(Color.WHITE);
+        else if(type==1)
+        {
+            buttons.get(i*8+j).setBackground(Color.BLACK);
+        }
+
+    }
+
+
+
+
+
     public Othelo() {
-        gameBoard=new int[8][8];
-        
-        gameBoard[3][3]=2;
-        gameBoard[4][4]=2;
-        
-        gameBoard[3][4]=1;
-        gameBoard[4][3]=1;
+        gameBoard = new int[8][8];
+        // white initial position
+        setGameBoard(3,3,2);
+        setGameBoard(4,4,2);
+        // Black initial position
+        setGameBoard(3,4,1);
+        setGameBoard(4,3,1);
 
-        ButtonsAction=Set_Button_Actions();
-        
-
+        ButtonsAction = Set_Button_Actions();
+        buttons=new ArrayList<JButton>();
         frame = new JFrame("Othelo");
         SetProperties();
 
     }
-    
+
+    // Actions Performed By Each Button
     private ActionListener Set_Button_Actions() {
         return new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(e.getActionCommand());
-                Integer cmd=new Integer(e.getActionCommand());
-                int i=cmd.intValue()/8;
-                int j=cmd.intValue()%8;
-                gameBoard[i][j]=playerTurn?1:2;
+                Integer cmd = new Integer(e.getActionCommand());
+                int i = cmd.intValue() / 8;
+                int j = cmd.intValue() % 8;
+                
+                int playerType=playerTurn ? 1 : 2;
+                
+                if(isValid(playerType, i, j))
+                setGameBoard(i,j,playerType);
+
+
                 printBoard();
 
-                playerTurn=!playerTurn;
+                playerTurn = !playerTurn;
 
             }
 
         };
     }
 
-    private void printBoard()
-    {
-        //Debug
+
+
+
+    //Printing The Board On console
+    private void printBoard() {
+        // Debug
         for (int i = 0; i < gameBoard.length; i++) {
             for (int j = 0; j < gameBoard.length; j++) {
-                char p=gameBoard[i][j]==1?'☻':' ';
-                p=gameBoard[i][j]==2?'☺':p;
-                System.out.print(p +" | ");
+                char p = gameBoard[i][j] == 1 ? '☻' : ' ';
+                p = gameBoard[i][j] == 2 ? '☺' : p;
+                System.out.print(p + " | ");
             }
             System.out.println("\n--------------------------------");
         }
-        //Debug
-        
+        // Debug
+
     }
-    
+
+
+
+    /**
+     * Defualt Frame Properties set
+     */
     public void SetProperties() {
         frame.setSize(800, 800);
         Draw();
@@ -81,6 +113,8 @@ public class Othelo {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+
+    //adding buttons to the frame
     public void Draw() {
         for (int i = 0; i < 64; i++) {
 
@@ -89,12 +123,55 @@ public class Othelo {
             b.setBackground(Color.GRAY);
             b.setForeground(b.getBackground());
             b.setActionCommand(Integer.toString(i));
-            
+
             b.addActionListener(ButtonsAction);
             frame.add(b);
+            buttons.add(b);
         }
     }
 
 
+    public boolean isValid(int type,int i,int j)
+    {
+        if(gameBoard[i][j]!=0)
+            return false;
+
+        int OtherType=type==1?2:1;
+        
+        
+        int x=j-1,y=i;
+        //<=== direction
+        
+       
+        while(x>-1 && gameBoard[i][x]==OtherType)
+        {
+            x--;
+        }
+        if(x>-1 && gameBoard[i][x]==type && x!=j-1)
+          return true;
+
+        //==> direction
+        x=j+1;
+        while (x<8 && gameBoard[i][x]==OtherType) {
+            x++;
+        }
+        if(x<8 && gameBoard[i][x]==type && x!=j+1)
+          return true;
+
+
+
+
+
+
+
+        
+        //checking in 8 directions
+
+
+
+        return false;
+    }
+
     
+
 }
