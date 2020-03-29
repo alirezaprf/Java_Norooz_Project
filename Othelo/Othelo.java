@@ -139,18 +139,18 @@ public class Othelo {
         int x = j - 1, y = i;
         // <=== direction
 
-        while (x > -1 && gameBoard[i][x] == OtherType) {
+        while (x > -1 && gameBoard[y][x] == OtherType) {
             x--;
         }
-        if (x > -1 && gameBoard[i][x] == type && x != j - 1)
+        if (x > -1 && gameBoard[y][x] == type && x != j - 1)
             return true;
 
         // ==> direction
         x = j + 1;
-        while (x < 8 && gameBoard[i][x] == OtherType) {
+        while (x < 8 && gameBoard[y][x] == OtherType) {
             x++;
         }
-        if (x < 8 && gameBoard[i][x] == type && x != j + 1)
+        if (x < 8 && gameBoard[y][x] == type && x != j + 1)
             return true;
 
 
@@ -175,9 +175,58 @@ public class Othelo {
         if (y < 8 && gameBoard[y][x] == type && y != i + 1)
             return true;
         
+        // up left
+        x = j - 1;
+        y = i - 1;
+
+        while (x > -1 && y > -1 && gameBoard[y][x] == OtherType) {
+            x--;
+            y--;
+        }
+        if (x > -1 && y > -1 && gameBoard[y][x] == type && x != j - 1 && y != i - 1)
+            return true;
+
+
 
         
 
+        //up right
+
+        x = j + 1;
+        y = i - 1;
+
+        while (x < 8 && y > -1 && gameBoard[y][x] == OtherType) {
+            x++;
+            y--;
+        }
+        if (x < 8 && y > -1 && gameBoard[y][x] == type && x != j + 1 && y != i - 1)
+            return true;
+
+
+
+        //down left
+
+        x = j - 1;
+        y = i + 1;
+
+        while (x > -1 && y < 8 && gameBoard[y][x] == OtherType) {
+            x--;
+            y++;
+        }
+        if (x > -1 && y < 8 && gameBoard[y][x] == type && x != j - 1 && y != i + 1)
+            return true;
+
+
+        //down right
+        x = j + 1;
+        y = i + 1;
+
+        while (x < 8 && y < 8 && gameBoard[y][x] == OtherType) {
+            x++;
+            y++;
+        }
+        if (x < 8 && y < 8 && gameBoard[y][x] == type && x != j + 1 && y != i + 1)
+            return true;
 
 
                 
