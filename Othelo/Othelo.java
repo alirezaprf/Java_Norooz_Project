@@ -13,6 +13,7 @@ public class Othelo {
     // if true black moves else white does
     private ActionListener ButtonsAction;
     private ArrayList<JButton> buttons;
+
     /**
      * gameBorad Containg Game's Data as int 0 which is the initial State of every
      * cell = empty 1 means black 2 means white
@@ -20,39 +21,34 @@ public class Othelo {
 
     /**
      * 
-     * @param i y
-     * @param j x
+     * @param i    y
+     * @param j    x
      * @param type type of board
      */
-    public void setGameBoard(int i,int j,int type)
-    {
-        gameBoard[i][j]=type;
-        if(type==2)
-            buttons.get(i*8+j).setBackground(Color.WHITE);
-        else if(type==1)
-        {
-            buttons.get(i*8+j).setBackground(Color.BLACK);
+    public void setGameBoard(int i, int j, int type) {
+        gameBoard[i][j] = type;
+        if (type == 2)
+            buttons.get(i * 8 + j).setBackground(Color.WHITE);
+        else if (type == 1) {
+            buttons.get(i * 8 + j).setBackground(Color.BLACK);
         }
 
     }
 
-
-
-
-
     public Othelo() {
         gameBoard = new int[8][8];
-        // white initial position
-        setGameBoard(3,3,2);
-        setGameBoard(4,4,2);
-        // Black initial position
-        setGameBoard(3,4,1);
-        setGameBoard(4,3,1);
 
         ButtonsAction = Set_Button_Actions();
-        buttons=new ArrayList<JButton>();
+        buttons = new ArrayList<JButton>();
         frame = new JFrame("Othelo");
         SetProperties();
+
+        // white initial position
+        setGameBoard(3, 3, 2);
+        setGameBoard(4, 4, 2);
+        // Black initial position
+        setGameBoard(3, 4, 1);
+        setGameBoard(4, 3, 1);
 
     }
 
@@ -66,12 +62,11 @@ public class Othelo {
                 Integer cmd = new Integer(e.getActionCommand());
                 int i = cmd.intValue() / 8;
                 int j = cmd.intValue() % 8;
-                
-                int playerType=playerTurn ? 1 : 2;
-                
-                if(isValid(playerType, i, j))
-                setGameBoard(i,j,playerType);
 
+                int playerType = playerTurn ? 1 : 2;
+
+                if (isValid(playerType, i, j))
+                    setGameBoard(i, j, playerType);
 
                 printBoard();
 
@@ -82,10 +77,7 @@ public class Othelo {
         };
     }
 
-
-
-
-    //Printing The Board On console
+    // Printing The Board On console
     private void printBoard() {
         // Debug
         for (int i = 0; i < gameBoard.length; i++) {
@@ -100,8 +92,6 @@ public class Othelo {
 
     }
 
-
-
     /**
      * Defualt Frame Properties set
      */
@@ -113,8 +103,7 @@ public class Othelo {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-
-    //adding buttons to the frame
+    // adding buttons to the frame
     public void Draw() {
         for (int i = 0; i < 64; i++) {
 
@@ -130,48 +119,32 @@ public class Othelo {
         }
     }
 
-
-    public boolean isValid(int type,int i,int j)
-    {
-        if(gameBoard[i][j]!=0)
+    public boolean isValid(int type, int i, int j) {
+        if (gameBoard[i][j] != 0)
             return false;
 
-        int OtherType=type==1?2:1;
-        
-        
-        int x=j-1,y=i;
-        //<=== direction
-        
-       
-        while(x>-1 && gameBoard[i][x]==OtherType)
-        {
+        int OtherType = type == 1 ? 2 : 1;
+
+        int x = j - 1, y = i;
+        // <=== direction
+
+        while (x > -1 && gameBoard[i][x] == OtherType) {
             x--;
         }
-        if(x>-1 && gameBoard[i][x]==type && x!=j-1)
-          return true;
+        if (x > -1 && gameBoard[i][x] == type && x != j - 1)
+            return true;
 
-        //==> direction
-        x=j+1;
-        while (x<8 && gameBoard[i][x]==OtherType) {
+        // ==> direction
+        x = j + 1;
+        while (x < 8 && gameBoard[i][x] == OtherType) {
             x++;
         }
-        if(x<8 && gameBoard[i][x]==type && x!=j+1)
-          return true;
+        if (x < 8 && gameBoard[i][x] == type && x != j + 1)
+            return true;
 
-
-
-
-
-
-
-        
-        //checking in 8 directions
-
-
+        // checking in 8 directions
 
         return false;
     }
-
-    
 
 }
