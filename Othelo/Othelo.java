@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Othelo {
 
@@ -129,7 +130,13 @@ public class Othelo {
             buttons.add(b);
         }
     }
-
+    /**
+     * 
+     * @param type type of player 1(black) 2(white)
+     * @param i y
+     * @param j x
+     * @return
+     */
     public boolean isValid(final int type,final int i,final int j) {
         if (gameBoard[i][j] != 0)
             return false;
@@ -237,4 +244,150 @@ public class Othelo {
         return false;
     }
 
+
+
+   
+     /**
+     * 
+     * @param type type of player 1(black) 2(white)
+     * @param i y
+     * @param j x
+     * @return
+     */
+    public void ApplyBoard(final int type,final int i,final int j){
+
+        int OtherType = type == 1 ? 2 : 1;
+        int x = j - 1, y = i;
+        ArrayList<ArrayList<Integer>> changes=new ArrayList<>();
+        
+        
+        
+        int index=0;
+        
+        changes.add(new ArrayList<>()); // forech direction up down left right and combination
+        changes.add(new ArrayList<>());
+        changes.add(new ArrayList<>());
+        changes.add(new ArrayList<>());
+        changes.add(new ArrayList<>());
+        changes.add(new ArrayList<>());
+        changes.add(new ArrayList<>());
+        changes.add(new ArrayList<>());
+        
+        // <=== direction
+
+        while (x > -1 && gameBoard[y][x] == OtherType) {
+            x--;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(x > -1 && gameBoard[y][x] == type && x != j - 1))
+            changes.get(index).clear();
+
+
+        index++;
+        
+        // ==> direction
+        x = j + 1;
+        while (x < 8 && gameBoard[y][x] == OtherType) {
+            x++;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(x < 8 && gameBoard[y][x] == type && x != j + 1))
+            changes.get(index).clear();
+
+
+        index++;
+        // up direction 
+        x=j;
+        y=i-1;
+        
+        while(y >-1 && gameBoard[y][x]==OtherType){
+            y--;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(y > -1 && gameBoard[y][x] == type && y != i - 1))
+            changes.get(index).clear();
+        
+        index++;
+        //down direction
+        x=j;
+        y=i+1;
+        
+        while(y < 8 && gameBoard[y][x]==OtherType){
+            y++;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(y < 8 && gameBoard[y][x] == type && y != i + 1))
+            changes.get(index).clear();
+        
+        
+        
+        
+        index++;
+        // up left
+        x = j - 1;
+        y = i - 1;
+
+        while (x > -1 && y > -1 && gameBoard[y][x] == OtherType) {
+            x--;
+            y--;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(x > -1 && y > -1 && gameBoard[y][x] == type && x != j - 1 && y != i - 1))
+            changes.get(index).clear();
+
+
+
+        
+        index++;
+        //up right
+
+        x = j + 1;
+        y = i - 1;
+
+        while (x < 8 && y > -1 && gameBoard[y][x] == OtherType) {
+            x++;
+            y--;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(x < 8 && y > -1 && gameBoard[y][x] == type && x != j + 1 && y != i - 1))
+            changes.get(index).clear();
+
+
+        index++;
+        //down left
+
+        x = j - 1;
+        y = i + 1;
+
+        while (x > -1 && y < 8 && gameBoard[y][x] == OtherType) {
+            x--;
+            y++;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(x > -1 && y < 8 && gameBoard[y][x] == type && x != j - 1 && y != i + 1))
+            changes.get(index).clear();
+
+        
+        
+        index++;
+        //down right
+        x = j + 1;
+        y = i + 1;
+
+        while (x < 8 && y < 8 && gameBoard[y][x] == OtherType) {
+            x++;
+            y++;
+            changes.get(index).add(y*8+x);
+        }
+        if (!(x < 8 && y < 8 && gameBoard[y][x] == type && x != j + 1 && y != i + 1))
+            changes.get(index).clear();
+
+
+        for (ArrayList<Integer> arrayList : changes) {
+            for (Integer  c: arrayList) {
+                setGameBoard(c/8, j%8, type);
+            }
+        }
+
+    }
 }
