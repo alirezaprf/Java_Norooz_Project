@@ -66,11 +66,22 @@ public class Othelo {
                 int playerType = playerTurn ? 1 : 2;
 
                 if (isValid(playerType, i, j))
+                {
                     setGameBoard(i, j, playerType);
+                    playerTurn = !playerTurn;
+                    if(playerTurn)
+                    {
+                        frame.setTitle("Black");
+                        System.out.println("Black :");
+                    }
+                    else
+                        frame.setTitle("White");
+                        System.out.println("White :");
+                }
 
                 printBoard();
 
-                playerTurn = !playerTurn;
+                
 
             }
 
@@ -119,7 +130,7 @@ public class Othelo {
         }
     }
 
-    public boolean isValid(int type, int i, int j) {
+    public boolean isValid(final int type,final int i,final int j) {
         if (gameBoard[i][j] != 0)
             return false;
 
@@ -142,6 +153,36 @@ public class Othelo {
         if (x < 8 && gameBoard[i][x] == type && x != j + 1)
             return true;
 
+
+        // up direction 
+        x=j;
+        y=i-1;
+        
+        while(y >-1 && gameBoard[y][x]==OtherType){
+            y--;
+        }
+        if (y > -1 && gameBoard[y][x] == type && y != i - 1)
+            return true;
+        
+
+        //down direction
+        x=j;
+        y=i+1;
+        
+        while(y < 8 && gameBoard[y][x]==OtherType){
+            y++;
+        }
+        if (y < 8 && gameBoard[y][x] == type && y != i + 1)
+            return true;
+        
+
+        
+
+
+
+                
+        
+        
         // checking in 8 directions
 
         return false;
