@@ -17,6 +17,9 @@ public class Othelo {
     private ActionListener ButtonsAction;
     private ArrayList<JButton> buttons;
 
+
+    private boolean lastPassed=false;
+
     /**
      * gameBorad Containg Game's Data as int 0 which is the initial State of every
      * cell = empty 1 means black 2 means white
@@ -68,20 +71,24 @@ public class Othelo {
 
                 int playerType = playerTurn ? 1 : 2;
 
-                if (isValid(playerType, i, j))
+                if (isValid(playerType, i, j) || lastPassed)
                 {
                     setGameBoard(i, j, playerType);
                     ApplyBoard(playerType,i,j);
                     playerTurn = !playerTurn;
                     
                     short valids=0;
-                    short fulls=0;
+                    short whites=0,blacks=0;
                     playerType = playerTurn ? 1 : 2;
                     for (int y = 0; y < 8; y++) {
                         for (int x = 0; x < 8; x++) {
                             if(gameBoard[y][x]!=0)
                                 {
-                                    fulls++;
+                                    if(gameBoard[y][x]==1)
+                                        blacks++;
+                                    else
+                                        whites++;
+
                                     buttons.get(y*8+x).setText("");
                                     continue;
                                 }
@@ -100,16 +107,15 @@ public class Othelo {
                             
                         }
                     }
-                    if(fulls==64)
+                    //checking wheteher  gameboard is full or not and check if 
+                    // both players have no option 
+                    if(blacks+whites>=64 || (valids==0 && lastPassed))
                     {
-                        System.out.println("Finished");
-                        frame.setTitle("Finished");
+                        frame.setTitle("finished "+ blacks+" : Black" + "-----  " +whites+" : Whites");
+                        System.out.println("finished "+ blacks+" : Black" + "-----  " +whites+" : Whites");
+                        return;
                     }
-                    if(valids==0)
-                    {
-                        System.out.println("Pass");
-                        playerTurn=!playerTurn;
-                    }
+                   
                     if(playerTurn)
                     {
                         frame.setTitle("Black");
@@ -119,6 +125,20 @@ public class Othelo {
                         frame.setTitle("White");
                         System.out.println("White :");
                     }
+                        
+                    if(valids==0)
+                    {
+                        System.out.println("Pass");
+                        playerTurn=!playerTurn;
+                        JButton source=(JButton)e.getSource();
+                        lastPassed=true;
+                        source.doClick();
+                        
+                        //return;
+                    }else
+                        lastPassed=false;
+
+
                 }
                 // TODO Auto-generated method stub
                 //printBoard();
@@ -298,7 +318,7 @@ public class Othelo {
      * @return
      */
     public void ApplyBoard(final int type,final int i,final int j){
-        System.out.println("Apply");
+        
         int OtherType = type == 1 ? 2 : 1;
         int x = j - 1, y = i;
         ArrayList<ArrayList<Integer>> changes=new ArrayList<>();
@@ -434,7 +454,16 @@ public class Othelo {
             }
         }
 
-        System.out.println(changes.toString());
+       
 
     }
+
+    //fast debug with aoutomatic test
+    public void doClick(int index)
+    {
+        buttons.get(index).doClick();
+    }
+
+
+
 }
