@@ -1,13 +1,15 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class Othelo {
-
+    
     private JFrame frame;
     private int[][] gameBoard;
     private boolean playerTurn = true;
@@ -71,16 +73,54 @@ public class Othelo {
                     setGameBoard(i, j, playerType);
                     ApplyBoard(playerType,i,j);
                     playerTurn = !playerTurn;
+                    
+                    short valids=0;
+                    short fulls=0;
+                    playerType = playerTurn ? 1 : 2;
+                    for (int y = 0; y < 8; y++) {
+                        for (int x = 0; x < 8; x++) {
+                            if(gameBoard[y][x]!=0)
+                                {
+                                    fulls++;
+                                    buttons.get(y*8+x).setText("");
+                                    continue;
+                                }
+
+                            if(isValid(playerType, y, x))
+                            {
+                                valids++;
+                                buttons.get(y*8+x).setForeground(Color.GREEN);
+                                buttons.get(y*8+x).setText("\u2714");
+                                
+                            }
+                            else{
+                                buttons.get(y*8+x).setText("");
+                            }
+                                
+                            
+                        }
+                    }
+                    if(fulls==64)
+                    {
+                        System.out.println("Finished");
+                        frame.setTitle("Finished");
+                    }
+                    if(valids==0)
+                    {
+                        System.out.println("Pass");
+                        playerTurn=!playerTurn;
+                    }
                     if(playerTurn)
                     {
                         frame.setTitle("Black");
                         System.out.println("Black :");
                     }
-                    else
+                    else{
                         frame.setTitle("White");
                         System.out.println("White :");
+                    }
                 }
-                //To_Do
+                // TODO Auto-generated method stub
                 //printBoard();
 
                 
