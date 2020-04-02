@@ -1,2 +1,3 @@
 # Java_Norooz_Project
-othelo in progress
+othelo done
+pentagp in progress
