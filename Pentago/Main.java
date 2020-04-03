@@ -1,20 +1,21 @@
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         
         Board board=new Board();
-        board.setByCordinate(0, 0, CellType.Red);
-        board.rotate(1, true);
-        board.rotate(1, true);
-        board.rotate(1, false);
-        board.rotate(1, false);
-        
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board.getArrayByIndex(1)[i][j]+" ");
-            }
-            System.out.println();
+        Scanner sc=new Scanner(System.in);
+        while(true)
+        {
+            int x,y;
+            x=sc.nextInt();
+            y=sc.nextInt();
+            int itype=sc.nextInt();
+            CellType type=itype%2==0?CellType.Red:CellType.Black;
+            board.setByCordinate(y, x, type);
+            board.print();
         }
-
+        
+        
     }
 }

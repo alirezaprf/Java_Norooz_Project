@@ -124,8 +124,22 @@ public class Block {
         rotator();
     }
     
+    /**
+     *  middle one is always constant during all rotation
+     * @return middle cell of a block
+     */
+    public CellType getMiddle()
+    {
+        return array[1][1];
+    }
     
-    
+    @Override
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
+        Block block=(Block)obj;
+        
+        return array[1][1]!=CellType.Empty && array[1][1]==block.getMiddle();
+    }
     ///applier of rotations
     private void rotator()
     {

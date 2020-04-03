@@ -1,6 +1,6 @@
 
 public class Board {
-   private Block b[];
+   private Block blocks[];
     /**
      * 
      * aligned as
@@ -9,14 +9,14 @@ public class Board {
 
 
      */
-
+    private short counter=0;//counter of not empty cells
    public Board()
    {
-    b=new Block[4];
-    b[0]=new Block();
-    b[1]=new Block();
-    b[2]=new Block();
-    b[3]=new Block();
+    blocks=new Block[4];
+    blocks[0]=new Block();
+    blocks[1]=new Block();
+    blocks[2]=new Block();
+    blocks[3]=new Block();
    }
 
 
@@ -28,29 +28,31 @@ public class Board {
     */
    public void setByCordinate(int y,int x,CellType type)
    {
+       counter++;
     if(y>2)
     {
         if(x>2)
         {
-            b[3].setByindex((y-3)*3 + x-3, type);
+            blocks[3].setByindex((y-3)*3 + x-3, type);
         }
         else
         {
-            b[2].setByindex((y-3)*3 + x, type);
+            blocks[2].setByindex((y-3)*3 + x, type);
         }
     }
     else
     {
         if(x>2)
         {
-            b[1].setByindex((y)*3 + x-3, type);
+            blocks[1].setByindex((y)*3 + x-3, type);
         }
         else
         {
-            b[0].setByindex((y)*3 + x, type);
+            blocks[0].setByindex((y)*3 + x, type);
         }
     }
    }
+
 
     /**
      * 
@@ -62,11 +64,11 @@ public class Board {
     {
         if(ClocWise)
         {
-            b[BlockNumber-1].ClockWiseRotation();
+            blocks[BlockNumber-1].ClockWiseRotation();
         }
         else
         {
-            b[BlockNumber-1].AntiClockRotation();
+            blocks[BlockNumber-1].AntiClockRotation();
         }
     }
     /**
@@ -76,10 +78,98 @@ public class Board {
      */
     public CellType[][] getArrayByIndex(int index)
     {
-        return b[index-1].getCells();
+        return blocks[index-1].getCells();
+    }
+
+    public int getCounter()
+    {
+        return counter;
+    }
+
+    public boolean CheckVictory()
+    {
+
+        /**
+         *  [1] | [2]
+         *  ---------
+         *  [3] | [4]
+         * 
+         */
+
+        /**
+         * 4 possible wins 
+         * 1=>2
+         * 1=>3
+         * 2=>4
+         * 3=>4
+         */
+
+        if(blocks[0].equals(blocks[1]))
+        {
+            //1=>2
+            if(blocks[0].getCells()[1][2]==blocks[0].getMiddle() && 
+            blocks[0].getCells()[1][2]==blocks[1].getCells()[1][0] )
+            {return (blocks[0].getCells()[1][0]==blocks[0].getMiddle()
+                || blocks[1].getCells()[1][2]==blocks[1].getMiddle());
+            } 
+
+            //to check if 5 of same type is aligned
+
+        }
+        else if(blocks[0].equals(blocks[2]))
+        {
+
+        } 
+        else if(blocks[1].equals(blocks[3]))
+        {
+
+        } 
+        else if(blocks[2].equals(blocks[3]))
+        {
+
+            //3=>4
+            if(blocks[2].getCells()[1][2]==blocks[2].getMiddle() && 
+            blocks[2].getCells()[1][2]==blocks[3].getCells()[1][0] )
+            {return (blocks[2].getCells()[1][0]==blocks[2].getMiddle()
+                || blocks[3].getCells()[1][2]==blocks[3].getMiddle());
+            } 
+
+            //to check if 5 of same type is aligned
+            
+
+        } 
+        
+
+
+        return false;
     }
 
 
+    public void print()
+    {
+        System.out.println();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                int index=0;
+                if(j>2)
+                    index++;
+                if(i>2)
+                    index+=2;
+                char c='○';
+                if(blocks[index].getCells()[i%3][j%3]==CellType.Black)
+                    c='B';
+                if(blocks[index].getCells()[i%3][j%3]==CellType.Red)
+                c='R';
+                System.out.print(c+" ");
+                if(j==2)
+                System.out.print(" | ");
+            }
+            System.out.println();
+            if(i==2)
+            System.out.println("--------------");
+        }
+    }
+    
 
 
 }
