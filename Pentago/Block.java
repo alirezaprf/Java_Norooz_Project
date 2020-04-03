@@ -66,7 +66,23 @@ public class Block {
      * @return Cells Array
      */
     public CellType[][] getCells() {
-        return array;
+        CellType[][] arr=new CellType[3][3];
+
+        int y=0,x=0;
+        for (int i = first_loop_start; i != first_loop_end; i += i < first_loop_end ? 1 : -1) {
+            x=0;
+            for (int j = second_loop_start; j != second_loop_end; j += j < second_loop_end ? 1 : -1) {
+                
+                if(reverse)
+                arr[y][x]=(array[j][i]);
+                else    
+                arr[y][x]=(array[i][j]);
+                x++;
+            }
+            y++;
+        }
+
+        return arr;
     }
 
     // getFirst_loop_start()
@@ -95,13 +111,13 @@ public class Block {
 
 
     ///Rotating Block Clock Direction
-    public void ClockRotation() {
+    public void ClockWiseRotation() {
         rotation++;
         rotation = rotation % 4;
         rotator();//apply rotation
     }
     ///Rotating Block ClockWise Direction
-    public void ClockWiseRotation()
+    public void AntiClockRotation()
     {
         rotation--;
         rotation = rotation % 4;
@@ -111,7 +127,7 @@ public class Block {
     
     
     ///applier of rotations
-    public void rotator()
+    private void rotator()
     {
         switch (rotation) {
             case 0:

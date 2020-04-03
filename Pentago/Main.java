@@ -1,34 +1,20 @@
 
 public class Main {
     public static void main(String[] args) {
-        Block b=new Block();
-        for(int i=0;i<9;i++)
-        {
-            if(i%4==0)
-            {
-                b.setByindex(i, CellType.Black);
-            }
-            else
-            {
-                b.setByindex(i, CellType.Red);
-            }
-        }
-        b.Print();
-        System.out.println("==============================");
-        b.ClockRotation();
-        b.Print();
-        System.out.println("==============================");
-        b.ClockRotation();
-        b.Print();
-        System.out.println("==============================");
-        b.ClockRotation();
-        b.Print();
-        System.out.println("==============================");
-        b.ClockRotation();
-        b.Print();
-        System.out.println("==============================");
-        b.ClockRotation();
         
-    }
+        Board board=new Board();
+        board.setByCordinate(0, 0, CellType.Red);
+        board.rotate(1, true);
+        board.rotate(1, true);
+        board.rotate(1, false);
+        board.rotate(1, false);
+        
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board.getArrayByIndex(1)[i][j]+" ");
+            }
+            System.out.println();
+        }
 
+    }
 }
