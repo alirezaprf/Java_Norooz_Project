@@ -53,6 +53,17 @@ public class Board {
     }
    }
 
+   public boolean isEmpty(int y,int x)
+   {
+       int index=0;
+        if(y>2)
+            index+=2;
+
+        if(x>2)
+            index++;
+
+        return blocks[index].getCells()[y%3][x%3]==CellType.Empty;
+   }
 
     /**
      * 
@@ -143,7 +154,7 @@ public class Board {
 
         return false;
     }
-
+   
 
     public void print()
     {
