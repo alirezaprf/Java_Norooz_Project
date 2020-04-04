@@ -113,6 +113,7 @@ public class Block {
     ///Rotating Block Clock Direction
     public void ClockWiseRotation() {
         rotation++;
+        
         rotation = rotation % 4;
         rotator();//apply rotation
     }
@@ -120,6 +121,9 @@ public class Block {
     public void AntiClockRotation()
     {
         rotation--;
+        if(rotation==-1)
+            rotation+=4;
+            
         rotation = rotation % 4;
         rotator();
     }

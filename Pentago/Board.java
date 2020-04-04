@@ -21,13 +21,14 @@ public class Board {
     private short counter = 0;// counter of not empty cells
 
     private JFrame frame;
-    private boolean victory=false;
-    private boolean isBlackPlaying=true;//to identify Type of Player 
+    private boolean victory = false;
+    private boolean isBlackPlaying = true;// to identify Type of Player
     private ArrayList<JButton> buttns;
-    private int BlockToRotate=0;
+    private int BlockToRotate = 0;
+
     public Board() {
         frame = new JFrame("Pentago");
-        buttns=new ArrayList<JButton>();
+        buttns = new ArrayList<JButton>();
         SetProperties();
 
         blocks = new Block[4];
@@ -36,17 +37,17 @@ public class Board {
         blocks[2] = new Block();
         blocks[3] = new Block();
     }
-    private ActionListener JOptionPaneDilaogActions(int index,JLabel jLabel)
-    {
-        return new ActionListener(){
+
+    private ActionListener JOptionPaneDilaogActions(int index, JLabel jLabel) {
+
+        return new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                jLabel.setText(" You Chose : "+Integer.toString(index));
-                
+                BlockToRotate = index;
+                jLabel.setText(" You Chose : " + Integer.toString(BlockToRotate));
+
                 jLabel.setForeground(Color.red);
-                
-                BlockToRotate=index-1;
 
             }
         };
@@ -54,26 +55,24 @@ public class Board {
 
     public void SetProperties() {
         frame.setSize(800, 800);
-        
-        frame.setLayout(new GridLayout(2, 2,50,30));
-        
-        
+
+        frame.setLayout(new GridLayout(2, 2, 50, 30));
 
         for (int i = 0; i < 4; i++) {
             JPanel jPanel = new JPanel();
-            jPanel.setLayout(new GridLayout(3, 3,10,10));
+            jPanel.setLayout(new GridLayout(3, 3, 10, 10));
             jPanel.setBackground(Color.decode("#66ffff"));
             jPanel.setVisible(true);
             for (int j = 0; j < 9; j++) {
 
                 JButton button = new RoundButton(Color.green);
                 button.setBackground(Color.white);
-                int Y=j/3+(i/2)*3,X=j%3+(i%2)*3;
+                int Y = j / 3 + (i / 2) * 3, X = j % 3 + (i % 2) * 3;
                 button.setActionCommand(Integer.toString(Y) + " " + Integer.toString(X));
-                
+
                 buttns.add(button);
                 button.addActionListener(new ActionListener() {
-                
+
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // TODO Auto-generated method stub
@@ -84,47 +83,58 @@ public class Board {
                         CellType type = isBlackPlaying ? CellType.Black : CellType.Red;
                         if (isEmpty(y, x) && !victory) {
                             setByCordinate(y, x, type);
-                            Color clr=type==CellType.Black?Color.black:Color.red;
-                            ((JButton)e.getSource()).setBackground(clr);
-                            
+                            Color clr = type == CellType.Black ? Color.black : Color.red;
+                            ((JButton) e.getSource()).setBackground(clr);
+
                             System.out.println("Now Rotate it");
                             String[] bu = { "ClockWise", "AntiClockWise" };
                             /**
                              * Graphic for Rotate Dialog
                              */
-                            JPanel rtPanel=new JPanel();
-                            rtPanel.setLayout(new GridLayout(2,2,5,5));
-                            JLabel jlabel=new JLabel("You Chose :");
+                            JPanel rtPanel = new JPanel();
+                            rtPanel.setLayout(new GridLayout(2, 2, 5, 5));
+                            JLabel jlabel = new JLabel("You Chose :");
                             JButton jb;
                             ///////////////////////////////////////////////////////////////////
-                            jb=new JButton("1");
+                            jb = new JButton("1");
                             jb.addActionListener(JOptionPaneDilaogActions(1, jlabel));
                             rtPanel.add(jb);
-                            
-                            jb=new JButton("2");
+
+                            jb = new JButton("2");
                             jb.addActionListener(JOptionPaneDilaogActions(2, jlabel));
                             rtPanel.add(jb);
-                            
-                            jb=new JButton("3");
+
+                            jb = new JButton("3");
                             jb.addActionListener(JOptionPaneDilaogActions(3, jlabel));
                             rtPanel.add(jb);
-                            
-                            jb=new JButton("4");
+
+                            jb = new JButton("4");
                             jb.addActionListener(JOptionPaneDilaogActions(4, jlabel));
                             rtPanel.add(jb);
+
+                            JComponent[] jComponents = { rtPanel, jlabel };
+                            int chose = JOptionPane.showOptionDialog(frame, jComponents, "title",
+                                    JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, bu, null);
+
                             
-
-
-                            JComponent[] jComponents={rtPanel,jlabel};
-                            JOptionPane.showOptionDialog(frame, jComponents, "title", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, bu, null);
+                            if(chose==JOptionPane.YES_OPTION)
+                            {
+                                rotate(BlockToRotate, true);
+                            }
+                            else
+                            {
+                                rotate(BlockToRotate, false);
+                            }
+                            
                             print();
 
                             isBlackPlaying = !isBlackPlaying;
                             if (CheckVictory()) {
                                 victory=true;
                                 System.out.println("Finished");
-                                //System.exit(0);
+                                System.exit(0);
                             }
+                            System.err.println("Push");
                         }
                     }
                 });
@@ -197,9 +207,10 @@ public class Board {
      * @param ClocWise true = clockWise Rotation false = AntiClockWise  
      * 
      */
-    public void rotate(int BlockNumber,boolean ClocWise)
+    public void rotate(int BlockNumber,boolean ClockWise)
     {
-        if(ClocWise)
+        
+        if(ClockWise)
         {
             blocks[BlockNumber-1].ClockWiseRotation();
         }
@@ -215,6 +226,7 @@ public class Board {
      */
     public void RotateButtons(int index)
     {
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 JButton btn=buttns.get(index*9+i*3+j);
@@ -230,6 +242,7 @@ public class Board {
                 
             }
         }
+
     }
 
     /**
