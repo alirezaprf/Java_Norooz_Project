@@ -48,9 +48,17 @@ public class Board {
                         String cmds[]=e.getActionCommand().split(" ");
                         y=Integer.parseInt(cmds[0]);
                         x=Integer.parseInt(cmds[1]);
-                        
-                        setByCordinate(y, x, CellType.Red);
-                        print();
+                        CellType type=isBlackPlaying?CellType.Black:CellType.Red;
+                        if(isEmpty(y, x))
+                        {
+                            setByCordinate(y, x, type);
+                            print();
+                            isBlackPlaying=!isBlackPlaying;
+                            if(CheckVictory())
+                            {
+                                System.exit(0);
+                            }
+                        }
                     }
                 });
 
@@ -72,11 +80,13 @@ public class Board {
     */
    public void setByCordinate(int y,int x,CellType type)
    {
+       
        counter++;
     if(y>2)
     {
         if(x>2)
         {
+
             blocks[3].setByindex((y-3)*3 + x-3, type);
         }
         else
@@ -97,6 +107,12 @@ public class Board {
     }
    }
 
+   /**
+    * 
+    * @param y
+    * @param x
+    * @return wheter the cell is Emty or not
+    */
    public boolean isEmpty(int y,int x)
    {
        int index=0;
@@ -136,9 +152,53 @@ public class Board {
         return blocks[index-1].getCells();
     }
 
+    /**
+     * 
+     * @param y 0 to 5
+     * @param x 0 to 5
+     * @return cell type of that
+     */
+    public CellType getCell(int y,int x)
+    {
+        if(y>2)
+    {
+        if(x>2)
+        {
+
+            return blocks[3].getCell(y-3,x-3);
+        }
+        else
+        {
+            return  blocks[2].getCell(y-3,x);
+        }
+    }
+    else
+    {
+        if(x>2)
+        {
+            return blocks[1].getCell(y,x-3);
+        }
+        else
+        {
+            return blocks[0].getCell(y,x);
+        }
+    }
+    } 
+
     public int getCounter()
     {
         return counter;
+    }
+    
+
+    private boolean isFiveAligned(CellType... cells)
+    {
+        for (int i = 2; i < cells.length-1; i++) {
+            if(cells[i]!=cells[i-1] || cells[i]==CellType.Empty)
+                return false;
+        }
+
+        return cells[0]==cells[1] || cells[5]==cells[1];
     }
 
     public boolean CheckVictory()
@@ -152,54 +212,55 @@ public class Board {
          */
 
         /**
-         * 4 possible wins 
-         * 1=>2
-         * 1=>3
-         * 2=>4
-         * 3=>4
+         * 18 possible wins 
+         * 
          */
 
-        if(blocks[0].equals(blocks[1]))
-        {
-            //1=>2
-            if(blocks[0].getCells()[1][2]==blocks[0].getMiddle() && 
-            blocks[0].getCells()[1][2]==blocks[1].getCells()[1][0] )
-            {return (blocks[0].getCells()[1][0]==blocks[0].getMiddle()
-                || blocks[1].getCells()[1][2]==blocks[1].getMiddle());
-            } 
-
-            //to check if 5 of same type is aligned
-
+        for (int i = 0; i < 6; i++) {
+            if(isFiveAligned(
+            getCell(i, 0),
+            getCell(i, 1),
+            getCell(i, 2),
+            getCell(i, 3),
+            getCell(i, 4),
+            getCell(i, 5)      )){
+                return true;
+            }
         }
-        else if(blocks[0].equals(blocks[2]))
-        {
 
-        } 
-        else if(blocks[1].equals(blocks[3]))
-        {
+        for (int i = 0; i < 6; i++) {
+            if(isFiveAligned(
+            getCell(0,i),
+            getCell(1,i),
+            getCell(2,i),
+            getCell(3,i),
+            getCell(4,i),
+            getCell(5,i)      )){
+                return true;
+            }
+        }
+        CellType[] arrTypes={getCell(0, 0),getCell(1, 1),getCell(2, 2),getCell(3, 3),
+            getCell(4, 4),getCell(5, 5)};
 
-        } 
-        else if(blocks[2].equals(blocks[3]))
-        {
-
-            //3=>4
-            if(blocks[2].getCells()[1][2]==blocks[2].getMiddle() && 
-            blocks[2].getCells()[1][2]==blocks[3].getCells()[1][0] )
-            {return (blocks[2].getCells()[1][0]==blocks[2].getMiddle()
-                || blocks[3].getCells()[1][2]==blocks[3].getMiddle());
-            } 
-
-            //to check if 5 of same type is aligned
-            
-
-        } 
         
+        if(isFiveAligned(arrTypes))
+            return true;
+
+            CellType[] REVERSE_arrTypes={getCell(0, 5),getCell(1, 4),getCell(2, 3),getCell(3, 2),
+                getCell(4, 1),getCell(5, 0)};
+
+
+                
+        if(isFiveAligned(REVERSE_arrTypes))
+            return true;
 
 
         return false;
     }
    
-
+    /**
+     * Printing The board On Console
+     */
     public void print()
     {
         System.out.println();
@@ -217,11 +278,11 @@ public class Board {
                 c='R';
                 System.out.print(c+" ");
                 if(j==2)
-                System.out.print(" | ");
+                System.out.print("| ");
             }
             System.out.println();
             if(i==2)
-            System.out.println("--------------");
+            System.out.println("-------------");
         }
     }
     

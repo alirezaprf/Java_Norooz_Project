@@ -132,7 +132,10 @@ public class Block {
     {
         return array[1][1];
     }
-    
+    public CellType getCell(int y,int x)
+    {
+        return getCells()[y][x];
+    }
     @Override
     public boolean equals(Object obj) {
         // TODO Auto-generated method stub
