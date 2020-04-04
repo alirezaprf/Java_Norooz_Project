@@ -1,23 +1,67 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class Board {
-   private Block blocks[];
+    private Block blocks[];
     /**
      * 
-     * aligned as
-     b1 | b2
-     b3 | b4
-
-
+     * aligned as b1 | b2 b3 | b4
+     * 
+     * 
      */
-    private short counter=0;//counter of not empty cells
-   public Board()
-   {
-    blocks=new Block[4];
-    blocks[0]=new Block();
-    blocks[1]=new Block();
-    blocks[2]=new Block();
-    blocks[3]=new Block();
-   }
+    private short counter = 0;// counter of not empty cells
+
+    private JFrame frame;
+
+    private boolean isBlackPlaying=true;//to identify Type of Player 
+    
+    
+    public Board() {
+        frame = new JFrame("Pentago");
+        SetProperties();
+
+        blocks = new Block[4];
+        blocks[0] = new Block();
+        blocks[1] = new Block();
+        blocks[2] = new Block();
+        blocks[3] = new Block();
+    }
+    
+
+    public void SetProperties() {
+        frame.setSize(800, 800);
+        frame.setLayout(new GridLayout(6, 6));
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                JButton button = new JButton(Integer.toString(i * 6 + j));
+                button.setVisible(true);
+                button.setActionCommand(Integer.toString(i)+" "+Integer.toString(j));
+                button.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // TODO Auto-generated method stub
+                        int y,x;
+                        String cmds[]=e.getActionCommand().split(" ");
+                        y=Integer.parseInt(cmds[0]);
+                        x=Integer.parseInt(cmds[1]);
+                        
+                        setByCordinate(y, x, CellType.Red);
+                        print();
+                    }
+                });
+
+                frame.add(button);
+        }
+    }
+    
+    frame.setVisible(true);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
 
 
    /**

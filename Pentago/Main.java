@@ -1,11 +1,15 @@
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 public class Main {
     public static void main(String[] args) {
         
         Board board=new Board();
         Scanner sc=new Scanner(System.in);
-        while(true)
+        
+
+        while(!board.CheckVictory())
         {
             int x,y;
             x=sc.nextInt();
@@ -15,6 +19,7 @@ public class Main {
             board.setByCordinate(y, x, type);
             board.print();
         }
+        System.out.println("Done");
         
         
     }
