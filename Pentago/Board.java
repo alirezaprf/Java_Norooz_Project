@@ -2,7 +2,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Board {
     private Block blocks[];
@@ -15,7 +17,7 @@ public class Board {
     private short counter = 0;// counter of not empty cells
 
     private JFrame frame;
-
+    private boolean victory=false;
     private boolean isBlackPlaying=true;//to identify Type of Player 
     
     
@@ -33,44 +35,56 @@ public class Board {
 
     public void SetProperties() {
         frame.setSize(800, 800);
-        frame.setLayout(new GridLayout(6, 6));
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                JButton button = new JButton(Integer.toString(i * 6 + j));
-                button.setVisible(true);
-                button.setActionCommand(Integer.toString(i)+" "+Integer.toString(j));
+        
+        frame.setLayout(new GridLayout(2, 2,50,30));
+        
+        
+
+        for (int i = 0; i < 4; i++) {
+            JPanel jPanel = new JPanel();
+            jPanel.setLayout(new GridLayout(3, 3,10,10));
+            jPanel.setVisible(true);
+            for (int j = 0; j < 9; j++) {
+
+                JButton button = new RoundButton(Color.green);
+                button.setBackground(Color.white);
+                int Y=j/3+(i/2)*3,X=j%3+(i%2)*3;
+                button.setActionCommand(Integer.toString(Y) + " " + Integer.toString(X));
                 button.addActionListener(new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // TODO Auto-generated method stub
-                        int y,x;
-                        String cmds[]=e.getActionCommand().split(" ");
-                        y=Integer.parseInt(cmds[0]);
-                        x=Integer.parseInt(cmds[1]);
-                        CellType type=isBlackPlaying?CellType.Black:CellType.Red;
-                        if(isEmpty(y, x))
-                        {
+                        int y, x;
+                        String cmds[] = e.getActionCommand().split(" ");
+                        y = Integer.parseInt(cmds[0]);
+                        x = Integer.parseInt(cmds[1]);
+                        CellType type = isBlackPlaying ? CellType.Black : CellType.Red;
+                        if (isEmpty(y, x) && !victory) {
                             setByCordinate(y, x, type);
+                            Color clr=type==CellType.Black?Color.black:Color.red;
+                            ((JButton)e.getSource()).setBackground(clr);
                             print();
-                            //isBlackPlaying=!isBlackPlaying;
-                            if(CheckVictory())
-                            {
-                                System.exit(0);
+                            isBlackPlaying = !isBlackPlaying;
+                            if (CheckVictory()) {
+                                victory=true;
+                                JDialog dialog=new JDialog(frame, "title");
+                                dialog.setVisible(true);
+                                dialog.setSize(100, 100);
+                                //System.exit(0);
                             }
                         }
                     }
                 });
 
-                frame.add(button);
+                jPanel.add(button);
+                button.setVisible(true);
+            }
+            frame.add(jPanel);
         }
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
-    frame.setVisible(true);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-
 
    /**
     * 
