@@ -3,6 +3,10 @@ import java.awt.geom.*;
 import javax.swing.*;
 
 public class RoundButton extends JButton {
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
   private Color btnColor;
   public RoundButton(Color color) {
     btnColor=color;

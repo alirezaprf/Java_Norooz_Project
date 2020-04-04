@@ -1,15 +1,10 @@
-import java.awt.Color;
-import java.util.Scanner;
-import javax.swing.border.Border;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import java.awt.*;
-import java.awt.geom.*;
-import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
         
          Board board=new Board();
+         
+         board.getCounter();
         // Scanner sc=new Scanner(System.in);
         
         // AWTGraphicsDemo  awtGraphicsDemo = new AWTGraphicsDemo();  
