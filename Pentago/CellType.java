@@ -2,7 +2,8 @@
 public enum CellType {
     Red,
     Black,
-    Empty
+    Empty,
+    None
     
 
 }

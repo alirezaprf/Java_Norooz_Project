@@ -53,7 +53,7 @@ public class Board {
                         {
                             setByCordinate(y, x, type);
                             print();
-                            isBlackPlaying=!isBlackPlaying;
+                            //isBlackPlaying=!isBlackPlaying;
                             if(CheckVictory())
                             {
                                 System.exit(0);
@@ -249,11 +249,52 @@ public class Board {
             CellType[] REVERSE_arrTypes={getCell(0, 5),getCell(1, 4),getCell(2, 3),getCell(3, 2),
                 getCell(4, 1),getCell(5, 0)};
 
+            
 
-                
         if(isFiveAligned(REVERSE_arrTypes))
             return true;
 
+            if(isFiveAligned(new CellType[]{getCell(0, 1),
+                getCell(1, 2),
+                getCell(2, 3),
+                getCell(3, 4),
+                getCell(4, 5),
+                CellType.None
+            })) return true;
+    
+            if(isFiveAligned(new CellType[]{getCell(1, 0),
+                getCell(2, 1),
+                getCell(3, 2),
+                getCell(4, 3),
+                getCell(5, 4),
+                CellType.None
+            })) return true;
+
+            if(isFiveAligned(new CellType[]{
+                getCell(4, 0),
+                getCell(3, 1),
+                getCell(2, 2),
+                getCell(1, 3),
+                getCell(0, 4),
+                CellType.None
+                
+            }))return true;
+
+            if(isFiveAligned(new CellType[]{
+                getCell(5, 1),
+                getCell(4, 2),
+                getCell(3, 3),
+                getCell(2, 4),
+                getCell(1, 5),
+                CellType.None
+                
+            }))return true;
+
+            
+                
+
+
+        
 
         return false;
     }
