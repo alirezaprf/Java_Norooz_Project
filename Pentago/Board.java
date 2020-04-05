@@ -141,7 +141,12 @@ public class Board {
                                 System.out.println("Finished "+Winner+" Won");
                                 //System.exit(0);
                             }
-                            
+                            if(counter==36)
+                            {
+                                victory=true;
+                                System.out.println("\nFinished as A Tie");
+                                frame.setTitle("Tie :/");
+                            }
                         }
                     }
                 });

@@ -31,6 +31,7 @@ public class Main {
             board.print();
             isBlackPlaying=!isBlackPlaying;
         }
+        sc.close();
         System.out.println("Done");
         
         
