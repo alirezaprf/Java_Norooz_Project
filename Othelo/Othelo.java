@@ -167,14 +167,16 @@ public class Othelo {
     // Printing The Board On console
     private void printBoard() {
         // Debug
+        System.out.println("");
         for (int i = 0; i < gameBoard.length; i++) {
             for (int j = 0; j < gameBoard.length; j++) {
                 char p = gameBoard[i][j] == 1 ? '☻' : ' ';
                 p = gameBoard[i][j] == 2 ? '☺' : p;
                 System.out.print(p + " | ");
             }
-            System.out.println("\n--------------------------------");
+            System.out.println("\n________________________________");
         }
+        System.out.println();
         // Debug
 
     }
