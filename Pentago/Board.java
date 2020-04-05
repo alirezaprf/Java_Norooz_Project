@@ -14,17 +14,18 @@ public class Board {
     private Block blocks[];
     /**
      * 
-     * aligned as b1 | b2 b3 | b4
+     * aligned as b1 | b2 
+     *            b3 | b4
      * 
      * 
      */
     private short counter = 0;// counter of not empty cells
-
+    private CellType Winner;
     private JFrame frame;
     private boolean victory = false;
     private boolean isBlackPlaying = true;// to identify Type of Player
     private ArrayList<JButton> buttns;
-    private int BlockToRotate = 0;
+    private int BlockToRotate = 1;
 
     public Board() {
         frame = new JFrame("Pentago");
@@ -75,7 +76,7 @@ public class Board {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO Auto-generated method stub
+                        
                         int y, x;
                         String cmds[] = e.getActionCommand().split(" ");
                         y = Integer.parseInt(cmds[0]);
@@ -86,14 +87,14 @@ public class Board {
                             Color clr = type == CellType.Black ? Color.black : Color.red;
                             ((JButton) e.getSource()).setBackground(clr);
 
-                            System.out.println("Now Rotate it");
+                            System.out.println("\n Now Rotate it \n");
                             String[] bu = { "ClockWise", "AntiClockWise" };
                             /**
                              * Graphic for Rotate Dialog
                              */
                             JPanel rtPanel = new JPanel();
                             rtPanel.setLayout(new GridLayout(2, 2, 5, 5));
-                            JLabel jlabel = new JLabel("You Chose :");
+                            JLabel jlabel = new JLabel("You Chose : "+Integer.toString(BlockToRotate));
                             JButton jb;
                             ///////////////////////////////////////////////////////////////////
                             jb = new JButton("1");
@@ -127,14 +128,20 @@ public class Board {
                             }
                             
                             print();
-
+                            
                             isBlackPlaying = !isBlackPlaying;
+                            
+                            if(isBlackPlaying)
+                                frame.setTitle("Black");
+                            else
+                                frame.setTitle("Red");
                             if (CheckVictory()) {
                                 victory=true;
-                                System.out.println("Finished");
-                                System.exit(0);
+                                frame.setTitle("Finished "+Winner+" Won");
+                                System.out.println("Finished "+Winner+" Won");
+                                //System.exit(0);
                             }
-                            System.err.println("Push");
+                            
                         }
                     }
                 });
@@ -327,6 +334,7 @@ public class Board {
             getCell(i, 3),
             getCell(i, 4),
             getCell(i, 5)      )){
+                Winner=getCell(i, 2);
                 return true;
             }
         }
@@ -339,6 +347,7 @@ public class Board {
             getCell(3,i),
             getCell(4,i),
             getCell(5,i)      )){
+                Winner=getCell(2, i);
                 return true;
             }
         }
@@ -347,7 +356,10 @@ public class Board {
 
         
         if(isFiveAligned(arrTypes))
-            return true;
+            {
+                Winner=arrTypes[2];
+                return true;
+            }
 
             CellType[] REVERSE_arrTypes={getCell(0, 5),getCell(1, 4),getCell(2, 3),getCell(3, 2),
                 getCell(4, 1),getCell(5, 0)};
@@ -355,7 +367,11 @@ public class Board {
             
 
         if(isFiveAligned(REVERSE_arrTypes))
-            return true;
+            {
+                Winner=REVERSE_arrTypes[2];    
+                return true;
+            }
+
 
             if(isFiveAligned(new CellType[]{getCell(0, 1),
                 getCell(1, 2),
@@ -363,7 +379,10 @@ public class Board {
                 getCell(3, 4),
                 getCell(4, 5),
                 CellType.None
-            })) return true;
+            })) {
+                Winner=getCell(3, 4);
+                return true;
+                }
     
             if(isFiveAligned(new CellType[]{getCell(1, 0),
                 getCell(2, 1),
@@ -371,7 +390,10 @@ public class Board {
                 getCell(4, 3),
                 getCell(5, 4),
                 CellType.None
-            })) return true;
+            })) {
+                Winner=getCell(4, 3);
+                return true;
+            }
 
             if(isFiveAligned(new CellType[]{
                 getCell(4, 0),
@@ -381,7 +403,9 @@ public class Board {
                 getCell(0, 4),
                 CellType.None
                 
-            }))return true;
+            })){
+                Winner=getCell(2, 2);
+                return true;}
 
             if(isFiveAligned(new CellType[]{
                 getCell(5, 1),
@@ -391,7 +415,9 @@ public class Board {
                 getCell(1, 5),
                 CellType.None
                 
-            }))return true;
+            })){
+                Winner=getCell(3, 3);
+                return true;}
 
             
                 
@@ -401,7 +427,19 @@ public class Board {
 
         return false;
     }
-   
+    
+    /**
+     * 
+     * @return if the game is Done Or not
+     */
+    public boolean isDone()
+    {
+        return victory;
+    }
+
+
+
+
     /**
      * Printing The board On Console
      */

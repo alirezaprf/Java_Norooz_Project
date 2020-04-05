@@ -8,22 +8,30 @@ public class Main {
          board.getCounter();
          Scanner sc=new Scanner(System.in);
         
-        
+        System.out.println("Welcome Either Use the Console Or Gui\nYou can't use both of them");
 
    
-
-        while(true)
+        boolean isBlackPlaying=true;
+        while(!board.isDone())
         {
-            int x,y;
+            System.out.println("\nEnter x(from 1 to 6) y(from 1 to 6) \nrotation Block(from 1 to 4 and negative number for AntiClockWise Roation) ");
+            CellType type=isBlackPlaying?CellType.Black:CellType.Red;
+            System.out.println(type+" : ");
+            int x,y,r;
             x=sc.nextInt();
             y=sc.nextInt();
-            int itype=sc.nextInt();
-            CellType type=itype%2==0?CellType.Red:CellType.Black;
-           // board.setByCordinate(y, x, type);
-            board.rotate(x, true);
+            r=sc.nextInt();
+            board.setByCordinate(y-1, x-1, type);
+            if(r==0)
+                r=1;
+            boolean anti=r>0;
+            if(!anti)
+                r*=-1;
+            board.rotate(r, anti);
             board.print();
+            isBlackPlaying=!isBlackPlaying;
         }
-        //System.out.println("Done");
+        System.out.println("Done");
         
         
     }

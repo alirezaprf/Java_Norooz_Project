@@ -142,7 +142,6 @@ public class Block {
     }
     @Override
     public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
         Block block=(Block)obj;
         
         return array[1][1]!=CellType.Empty && array[1][1]==block.getMiddle();
