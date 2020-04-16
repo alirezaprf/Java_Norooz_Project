@@ -32,8 +32,10 @@ public class NormalCard extends Card {
        else
        {
            //Wild Card
+           // You Should Follow The Wild's Color
+           return card.getColor()==color;
        }
-        return false;
+        
     }
     
     public int getNumber() {
