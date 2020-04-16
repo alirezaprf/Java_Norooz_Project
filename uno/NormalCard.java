@@ -1,0 +1,56 @@
+
+public class NormalCard extends Card {
+
+    private int number=-1;
+    public NormalCard(Colors color,CardType Type, int ... numbers)
+    {
+        super();
+        this.color=color;
+        this.type=Type;
+        if(type==CardType.numeric)
+            this.number=numbers[0];
+
+    }
+    
+    @Override
+    protected boolean isPossible(Card card) {
+       if(card instanceof NormalCard)
+       {
+           NormalCard normalCard=(NormalCard)card;
+           if(normalCard.getType()==CardType.numeric)
+           {
+               //numeric card 
+               //check by color or number
+               if(normalCard.getColor()==color || normalCard.getNumber()==number)
+                {
+                    
+                    return true;
+                } 
+           }
+           return normalCard.getType()==type;
+       }
+       else
+       {
+           //Wild Card
+       }
+        return false;
+    }
+    
+    public int getNumber() {
+        return number;
+    }
+    /**
+     * @return score of card which is 
+     * number of card for numerics
+     * and 20 for actionCards
+     */
+    @Override
+    public int getScore() {
+        if(type==CardType.numeric)
+        {
+            return number;
+        }
+        
+        return 20;
+    }
+}
