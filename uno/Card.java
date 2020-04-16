@@ -6,7 +6,7 @@ public abstract class Card {
     /**
      * takes the current Card and Checks if you can put this card on top of it
      */
-    protected abstract boolean isPossible(Card card);
+    public abstract boolean isPossible(Card card,Card... cardsOnHand);
     /**
      * 
      * @return type of the 

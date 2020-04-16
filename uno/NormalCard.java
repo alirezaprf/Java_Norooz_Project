@@ -13,7 +13,7 @@ public class NormalCard extends Card {
     }
     
     @Override
-    protected boolean isPossible(Card card) {
+    public boolean isPossible(Card card,Card... cardOnHand) {
        if(card instanceof NormalCard)
        {
            NormalCard normalCard=(NormalCard)card;
@@ -27,7 +27,7 @@ public class NormalCard extends Card {
                     return true;
                 } 
            }
-           return normalCard.getType()==type;
+           return normalCard.getType()==type || normalCard.getColor()==color;
        }
        else
        {

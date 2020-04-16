@@ -2,9 +2,17 @@
 public class WildCard extends Card{
 
     @Override
-    protected boolean isPossible(Card card) {
-        
-        return false;
+    public boolean isPossible(Card card,Card ... cardsOnHand) {
+        for (Card target : cardsOnHand) {
+            if(target instanceof NormalCard)
+            {
+                if(target.isPossible(card))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
