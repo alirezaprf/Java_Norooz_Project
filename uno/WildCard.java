@@ -3,7 +3,14 @@ public class WildCard extends Card {
 
     @Override
     public boolean isPossible(Card card, Card... cardsOnHand) {
-
+        
+        ///wild anywhere anytime
+        if(this.getType()==CardType.wild)
+            return true;
+        
+        
+        //Current Card Is Wild +4
+        ///////////////////////////////////
         for (Card target : cardsOnHand) {
 
             if (target.getType() == CardType.wild)
