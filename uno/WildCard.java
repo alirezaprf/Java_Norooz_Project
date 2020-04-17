@@ -1,6 +1,15 @@
 
 public class WildCard extends Card {
 
+
+    public WildCard(CardType Type)
+    {
+        this.type=Type;
+        color=Colors.Black;
+    }
+
+
+
     @Override
     public boolean isPossible(Card card, Card... cardsOnHand) {
         

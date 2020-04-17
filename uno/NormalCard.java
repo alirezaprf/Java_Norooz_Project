@@ -67,5 +67,10 @@ public class NormalCard extends Card {
         }
         return false;
     }
+    @Override
+    public String toString() {
+        String s=type==CardType.numeric?color+" - "+number+" \n":color+"\n";
+        return super.toString()+s;
+    }
 
 }

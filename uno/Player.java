@@ -47,4 +47,9 @@ public class Player {
         return cards;
     }
 
+    public boolean hasWon()
+    {
+        return cards.size()==0;
+    }
+
 }
