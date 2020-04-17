@@ -14,6 +14,12 @@ public abstract class Card {
      * 
      * @return type of the 
      */
+
+    public void Print()
+    {
+        System.out.println("Unkown Card");
+    }
+
     public CardType getType()
     {
         return type;

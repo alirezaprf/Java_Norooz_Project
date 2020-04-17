@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Main{
     public static void main(String[] args) {
+        int playersSize=2;
         ArrayList<Card> rep=new ArrayList<>();
         ArrayList<Player> players=new ArrayList<Player>();
         
@@ -24,7 +25,7 @@ public class Main{
             rep.add(new WildCard(CardType.wildDraw));
         }
         Random random=new Random();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < playersSize; i++) {
             Player p=new Player();
             for (int j = 0; j < 7; j++) {
                 int index=random.nextInt(rep.size());
@@ -51,19 +52,18 @@ public class Main{
 
         for (int i = 0; i < players.size(); i++) {
             for (Card card : players.get(i).getCards()) {
-                System.out.print(card);
+                card.Print();
+                System.out.println(".................");
                  Card[] hand=new Card[players.get(i).getCards().size()];
                  players.get(i).getCards().toArray(hand);
-                 System.out.println("    =>"+card.isPossible(current, hand));
+                 
             }
-            System.out.println(oc.ANSI_BG_PURPLE+"==================================");
+            System.out.println("\n\n\n");
         }
 
 
         turnControl tc=new turnControl(players.size());
         
-
-
         
         
 

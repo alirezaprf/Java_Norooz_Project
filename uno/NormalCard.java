@@ -78,4 +78,24 @@ public class NormalCard extends Card {
         return super.toString()+s;
     }
 
+    @Override
+    public void Print() {
+        if(type==CardType.numeric)
+        {
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("    "+color+"   ");
+            System.out.println("    "+number+"   ");
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+        
+        }
+        else
+        {
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("    "+color+"   ");
+            System.out.println("    "+type+"   ");
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+        
+        }
+    }
+
 }

@@ -51,5 +51,17 @@ public class Player {
     {
         return cards.size()==0;
     }
+    /**
+     * 
+     * @param index index of card that is possible
+     * @return the card to be replaced
+     */
+    public Card drop(int index)
+    {
+        Card c = cards.get(index);
+        cards.remove(index);
+        return c;
+
+    }
 
 }

@@ -15,6 +15,7 @@ public class turnControl {
     public void reverse()
     {
         reversed=!reversed;
+        tchange();
     }
     public int turn()
     {
@@ -25,7 +26,7 @@ public class turnControl {
     }
     public void tchange()
     {
-        if(reversed)
+        if(!reversed)
         {
             Turn++;
         }

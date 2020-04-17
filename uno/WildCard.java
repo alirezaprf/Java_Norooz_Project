@@ -13,7 +13,23 @@ public class WildCard extends Card {
         
         return super.toString()+"\n";
     }
+    @Override
+    public void Print() {
+        if(type==CardType.wild){
 
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("          Wild        ");
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+        }else
+        {
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("           Wild   ");
+            System.out.println("           Draw   ");
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+        
+        }
+
+    }
 
     @Override
     public boolean isPossible(Card card, Card... cardsOnHand) {
