@@ -8,11 +8,18 @@ public class WildCard extends Card {
         color=Colors.Black;
     }
 
+    @Override
+    public String toString() {
+        
+        return super.toString()+"\n";
+    }
 
 
     @Override
     public boolean isPossible(Card card, Card... cardsOnHand) {
         
+        
+
         ///wild anywhere anytime
         if(this.getType()==CardType.wild)
             return true;
@@ -21,6 +28,9 @@ public class WildCard extends Card {
         //Current Card Is Wild +4
         ///////////////////////////////////
         for (Card target : cardsOnHand) {
+            if(target.getType()==CardType.wildDraw)
+            continue;
+
 
             if (target.getType() == CardType.wild)
                 return false;

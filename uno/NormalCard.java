@@ -14,6 +14,7 @@ public class NormalCard extends Card {
     
     @Override
     public boolean isPossible(Card card,Card... cardOnHand) {
+        
        if(card instanceof NormalCard)
        {
            NormalCard normalCard=(NormalCard)card;
