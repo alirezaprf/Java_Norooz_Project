@@ -26,7 +26,16 @@ public class WildCard extends Card {
         return true;
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        
+        if(obj instanceof WildCard)
+        {
+            return ((WildCard)obj).getType()==type;
+        }
+        
+        return false;
+    }
 
     @Override
     public int getScore() {
