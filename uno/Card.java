@@ -24,4 +24,11 @@ public abstract class Card {
         return color;
     }
     public abstract int getScore();
+
+
+    @Override
+    public String toString() {
+        
+        return "|| "+type.name()+" || ";
+    }
 }

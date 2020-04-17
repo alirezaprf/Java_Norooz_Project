@@ -55,4 +55,17 @@ public class NormalCard extends Card {
         
         return 20;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof NormalCard)
+        {
+            NormalCard nc=(NormalCard)obj;
+            return nc.getColor()==color && nc.getType()==type 
+            && nc.getNumber()==number;
+        }
+        return false;
+    }
+
 }

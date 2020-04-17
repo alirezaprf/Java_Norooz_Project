@@ -26,15 +26,7 @@ public class WildCard extends Card {
         return true;
     }
 
-    @Override
-    public String toString() {
-        if (type == CardType.wild) {
-
-            return "Wild Color";
-        } else
-            return "Wild +4";
-
-    }
+    
 
     @Override
     public int getScore() {
