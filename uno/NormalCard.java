@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class NormalCard extends Card {
 
@@ -42,7 +43,10 @@ public class NormalCard extends Card {
        }
         
     }
-    
+    @Override
+    public boolean isPossible(Card card, ArrayList<Card> cardsonHand) {
+        return isPossible(card);
+    }
     public int getNumber() {
         return number;
     }
@@ -74,7 +78,7 @@ public class NormalCard extends Card {
     }
     @Override
     public String toString() {
-        String s=type==CardType.numeric?color+" - "+number+" \n":color+"\n";
+        String s=type==CardType.numeric?color+"-"+number+" | ":color+" | ";
         return super.toString()+s;
     }
 

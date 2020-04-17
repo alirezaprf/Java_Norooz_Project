@@ -13,19 +13,19 @@ public class WildCard extends Card {
     @Override
     public String toString() {
         
-        return super.toString()+"\n";
+        return super.toString()+" / ";
     }
     @Override
     public void Print() {
         if(type==CardType.wild){
 
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
-            System.out.println("          Wild        ");
+            System.out.println("          Wild("+color+")        ");
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
         }else
         {
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
-            System.out.println("           Wild   ");
+            System.out.println("           Wild("+color+")  ");
             System.out.println("           Draw   ");
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
         
@@ -35,6 +35,10 @@ public class WildCard extends Card {
     public boolean isWildDraw()
     {
         return type==CardType.wildDraw;
+    }
+    @Override
+    public void action() {
+        randomColor();
     }
     public void randomColor()
     {

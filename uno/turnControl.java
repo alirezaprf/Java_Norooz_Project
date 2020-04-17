@@ -22,7 +22,7 @@ public class turnControl {
         if(Turn<0)
         Turn+=players;
 
-        return Turn%4;
+        return Turn%players;
     }
     public void tchange()
     {
@@ -40,5 +40,20 @@ public class turnControl {
             return "AntiClockWise";
         }
         return "ClockWise";
+    }
+    public int nextTurn()
+    {
+        int t=Turn;
+        if(!reversed)
+        {
+            t++;
+        }
+        else
+            t--;
+
+        if(t<0)
+            t+=players;
+    
+        return t%4;
     }
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
     private ArrayList<Card> cards;
@@ -18,6 +19,43 @@ public class Player {
         cards.add(card);
     }
 
+    /**
+     * 
+     * @param card adds a random card to list 
+     */
+    public void addCard(ArrayList<Card> rep)
+    {
+        
+        Random random=new Random();
+        int index=random.nextInt(rep.size());
+        cards.add(rep.get(index));
+        rep.remove(index);
+    }
+    /**
+     * 
+     * @return index of a draw card if it exists
+     */
+    public int canDropDraw()
+    {
+        for (int i = 0; i < cards.size(); i++) {
+            if(cards.get(i).getType()==CardType.draw)
+                return i;
+        }
+        return -1;
+    }
+    /**
+     * 
+     * @return index of a wild draw card
+     */
+    public int canDropWildDraw()
+    {
+        for (int i = 0; i < cards.size(); i++) {
+            if(cards.get(i).getType()==CardType.draw)
+                return i;
+        }
+        return -1;
+    }
+    
     /**
      * 
      * @return sum of all cards scores
@@ -66,7 +104,7 @@ public class Player {
     /**
      * 
      * @param card current card
-     * @param cardsOnHand other cards on hand
+     * 
      * @return -1 if you can't drop any
      * @return index if you can
      * 
@@ -83,6 +121,12 @@ public class Player {
             }
         }
         return -1;
+    }
+    public void printCards()
+    {
+        for (Card card : cards) {
+            System.out.print(card);
+        }
     }
     
 

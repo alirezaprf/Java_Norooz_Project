@@ -9,13 +9,18 @@ public abstract class Card {
      */
     public boolean isPossible(Card card,Card... cardsOnHand)
     {
+        System.out.println("Error #1");
         return false;
     }
     public boolean isPossible(Card card,ArrayList<Card> cardsonHand)
     {
+        System.out.println("Error #2");
         return false;
     }
-    
+    public void action()
+    {
+        //some action for cards
+    }
     /**
      * 
      * @return type of the 
@@ -44,6 +49,6 @@ public abstract class Card {
     @Override
     public String toString() {
         
-        return type.name()+" : ";
+        return type.name()+"-";
     }
 }
