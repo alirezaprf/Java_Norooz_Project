@@ -63,7 +63,35 @@ public class Main{
 
 
         turnControl tc=new turnControl(players.size());
-        
+        while(true)
+        {
+            //get turns
+
+
+            int turn=tc.turn();
+            if(turn==0)
+            {
+                //Main Player of the Game
+            }
+            else
+            {
+                //computer dicision
+                int cardIndex=players.get(turn).canDrop(current);
+                if(cardIndex!=-1)
+                {
+                    
+                }
+                else
+                {
+
+                }
+                
+            }
+
+            //change turns
+            tc.tchange();
+
+        }
         
         
 

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Random;
 
 public class WildCard extends Card {
 
@@ -30,9 +32,49 @@ public class WildCard extends Card {
         }
 
     }
+    public boolean isWildDraw()
+    {
+        return type==CardType.wildDraw;
+    }
+    public void randomColor()
+    {
+        Random rand=new Random();
+        setColor(Colors.values()[rand.nextInt(
+            Colors.values().length-1)]);
+        
+    }
 
     @Override
     public boolean isPossible(Card card, Card... cardsOnHand) {
+        
+        
+
+        ///wild anywhere anytime
+        if(this.getType()==CardType.wild)
+            return true;
+        
+        
+        //Current Card Is Wild +4
+        ///////////////////////////////////
+        for (Card target : cardsOnHand) {
+            if(target.getType()==CardType.wildDraw)
+            continue;
+
+
+            if (target.getType() == CardType.wild)
+                return false;
+
+            if (target instanceof NormalCard) {
+                if (target.isPossible(card)) {
+                    return false;
+                }
+            }
+
+        }
+        return true;
+    }
+    @Override
+    public boolean isPossible(Card card, ArrayList<Card> cardsOnHand) {
         
         
 

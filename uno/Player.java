@@ -63,5 +63,27 @@ public class Player {
         return c;
 
     }
+    /**
+     * 
+     * @param card current card
+     * @param cardsOnHand other cards on hand
+     * @return -1 if you can't drop any
+     * @return index if you can
+     * 
+     */
+    
+    public int canDrop(Card card)
+    {
+        
+        for (int i = 0; i < cards.size(); i++) {
+            
+            if(cards.get(i).isPossible(card, cards))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
 
 }

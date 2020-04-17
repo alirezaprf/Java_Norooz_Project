@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public abstract class Card {
     protected int score;
@@ -10,6 +11,11 @@ public abstract class Card {
     {
         return false;
     }
+    public boolean isPossible(Card card,ArrayList<Card> cardsonHand)
+    {
+        return false;
+    }
+    
     /**
      * 
      * @return type of the 
