@@ -56,8 +56,16 @@ public class Main{
                  players.get(i).getCards().toArray(hand);
                  System.out.println("    =>"+card.isPossible(current, hand));
             }
-            System.out.println("==================================");
+            System.out.println(oc.ANSI_BG_PURPLE+"==================================");
         }
+
+
+        turnControl tc=new turnControl(players.size());
+        
+
+
+        
+        
 
     }
 }

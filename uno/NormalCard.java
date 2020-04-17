@@ -27,7 +27,11 @@ public class NormalCard extends Card {
                     
                     return true;
                 } 
+                return false;
            }
+
+
+           ///skip reverse draw
            return normalCard.getType()==type || normalCard.getColor()==color;
        }
        else
