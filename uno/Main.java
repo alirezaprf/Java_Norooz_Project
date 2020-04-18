@@ -107,9 +107,13 @@ public class Main {
 
             int turn = tc.turn();
             System.out.println("player " + (turn + 1) + " :");
+            
+            System.out.println("type something and press Enter to go on");
+            sc.next();
 
-            sc.nextLine();
-            // get turns
+
+
+
 
             if (drawPenalty > 0) {
                 if (drawPenalty == 2) {
@@ -126,7 +130,9 @@ public class Main {
                                 canDropDraw = sc.nextInt();
                                 canDropDraw--;
                                 if (players.get(turn).getCards().get(canDropDraw).getType() == CardType.draw) {
-                                    break;
+                                    {
+                                        break;
+                                    }
                                 }
                                 System.out.println("NOt Valid :(   ");
 

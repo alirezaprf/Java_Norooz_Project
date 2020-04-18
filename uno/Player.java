@@ -98,7 +98,7 @@ public class Player {
     {
         Card c = cards.get(index);
         c.action();
-        System.out.println(c+" Dropped ");
+        System.out.println("\n===>"+c+" Dropped ...");
         cards.remove(index);
         return c;
 
