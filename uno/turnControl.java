@@ -1,5 +1,5 @@
 
-public class turnControl {
+public class TurnControl {
     private int players=0;
     private int Turn=0;
     private boolean reversed=false;
@@ -7,7 +7,7 @@ public class turnControl {
      * 
      * @param number number of players
      */
-    public turnControl(int number)
+    public TurnControl(int number)
     {
         players=number;
     }

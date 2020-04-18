@@ -57,12 +57,11 @@ public class Main{
         }
 
         
-
+        TurnControl tc=new TurnControl(players.size());
         int drawPenalty=0;
         boolean skip=false;
         boolean hasEnded=false;
-
-        turnControl tc=new turnControl(players.size());
+        
 
 
         while(!hasEnded)
