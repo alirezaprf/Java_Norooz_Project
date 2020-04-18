@@ -50,7 +50,7 @@ public class Player {
     public int canDropWildDraw()
     {
         for (int i = 0; i < cards.size(); i++) {
-            if(cards.get(i).getType()==CardType.draw)
+            if(cards.get(i).getType()==CardType.wildDraw)
                 return i;
         }
         return -1;
@@ -97,6 +97,8 @@ public class Player {
     public Card drop(int index)
     {
         Card c = cards.get(index);
+        c.action();
+        System.out.println(c+" Dropped ");
         cards.remove(index);
         return c;
 
@@ -110,17 +112,28 @@ public class Player {
      * 
      */
     
-    public int canDrop(Card card)
+    public int canDrop(Card cuurentCard)
     {
         
         for (int i = 0; i < cards.size(); i++) {
             
-            if(cards.get(i).isPossible(card, cards))
+            if(cards.get(i).isPossible(cuurentCard, cards))
             {
                 return i;
             }
         }
         return -1;
+    }
+    /***
+     * 
+     * @param index index of specific card (Chosen By human)
+     * @param CurrentCard Current card 
+     * @return true of false as if it's possible
+     */
+    public boolean isPossibleToDrop(int index,Card CurrentCard)
+    {
+        return cards.get(index).isPossible(CurrentCard, cards);
+
     }
     public void printCards()
     {

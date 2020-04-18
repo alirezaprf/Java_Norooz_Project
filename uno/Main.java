@@ -4,21 +4,20 @@ import java.util.Scanner;
 import java.io.PrintStream;
 import java.lang.System;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
 
-        Scanner sc=new Scanner(System.in);
-        
+        Scanner sc = new Scanner(System.in);
 
-        int playersSize=4;
-        ArrayList<Card> rep=new ArrayList<>();
-        ArrayList<Player> players=new ArrayList<Player>();
-        
+        int playersSize = 3;
+        ArrayList<Card> rep = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<Player>();
+
         for (int i = 1; i <= 4; i++) {
-            Colors color=Colors.color(i);
+            Colors color = Colors.color(i);
             rep.add(new NormalCard(color, CardType.numeric, 0));
             for (int k = 0; k < 2; k++) {
-                
+
                 for (int j = 1; j < 10; j++) {
                     rep.add(new NormalCard(color, CardType.numeric, j));
                 }
@@ -31,234 +30,283 @@ public class Main{
             rep.add(new WildCard(CardType.wild));
             rep.add(new WildCard(CardType.wildDraw));
         }
-        Random random=new Random();
+        Random random = new Random();
         for (int i = 0; i < playersSize; i++) {
-            Player p=new Player();
+            Player p = new Player();
             for (int j = 0; j < 7; j++) {
                 p.addCard(rep);
             }
             players.add(p);
-            
+
         }
-        // players.get(0).addCard(rep.get(107));
-        // players.get(1).addCard(rep.get(105));
 
-
+        // players.get(1).addCard(rep.get(107));
+        // players.get(2).addCard(rep.get(105));
+        // players.get(1).addCard(rep.get(103));
+        // players.get(2).addCard(rep.get(101));
+        // players.get(0).addCard(rep.get(5));
+        // players.get(0).addCard(rep.get(4));
 
         Card current;
-        boolean firstRound=true;
+        boolean firstRound = true;
+        // find a non wild card
         while (true) {
-            
-            int randi=random.nextInt(rep.size());
-            current=rep.get(randi);
-            if(current instanceof WildCard)
+
+            int randi = random.nextInt(rep.size());
+            current = rep.get(randi);
+            if (current instanceof WildCard)
                 continue;
             rep.remove(randi);
             break;
         }
 
-        
-        TurnControl tc=new TurnControl(players.size());
-        int drawPenalty=0;
-        boolean skip=false;
-        boolean hasEnded=false;
-        
-        switch(current.getType())
-        {
+        TurnControl tc = new TurnControl(players.size());
+        int drawPenalty = 0;
+        boolean skip = false;
+        boolean hasEnded = false;
+
+        switch (current.getType()) {
             case draw:
-                        drawPenalty=2;
-                        skip=true;
-                        break;
-                        
-                        case reverse:
-                        tc.reverse();
-                        break;
-                        
-                        case skip:
-                        tc.tchange();
-                        break;
-                    default:
-                        break;
+                drawPenalty = 2;
+                skip = true;
+                break;
+
+            case reverse:
+                tc.reverse();
+                break;
+
+            case skip:
+                tc.tchange();
+                break;
+            default:
+                break;
 
         }
 
-
-
-
-
-
-
-        ///main game play 
-        ////***************************** */
-        while(!hasEnded)
-        {
+        /// main game play
+        //// ***************************** */
+        while (!hasEnded) {
+            System.out.println("Current Card is :");
             current.Print();
-            System.out.println("\n\n");
+            System.out.println("====>                             ");
+            System.out.println("     ====>                             ");
             for (int i = 0; i < players.size(); i++) {
                 players.get(i).printCards();
                 System.out.println("\n___________________________________________\n");
             }
-            
-            
-            
+
             for (int i = 0; i < players.size(); i++) {
-                if(players.get(i).hasWon())
-                {
-                    hasEnded=true;
+                if (players.get(i).hasWon()) {
+                    hasEnded = true;
                     break;
                 }
             }
 
-            if(hasEnded)
+            if (hasEnded)
                 break;
-            
-            
-            
-            
-            
-            int turn=tc.turn();
-            System.out.println(":" + turn+" :");
+
+            int turn = tc.turn();
+            System.out.println("player " + (turn + 1) + " :");
+
             sc.nextLine();
-            //get turns
+            // get turns
 
+            if (drawPenalty > 0) {
+                if (drawPenalty == 2) {
+                    // current card is draw
+                    int canDropDraw = players.get(turn).canDropDraw();
 
-            if(drawPenalty>0)
-            {
-                if(drawPenalty==2)
-                {
-                    //current card is draw
-                    int canDropDraw=players.get(turn).canDropDraw();
+                    if (canDropDraw != -1 && !firstRound) {
+                        // custom desicion for himan player
+                        if (turn == 0) {
+                            System.out.println("You can Drop a draw card ");
+                            System.out.print("Enter a Number (number of a Draw card) between 1 to "
+                                    + players.get(turn).getCards().size()+ " :") ;
+                            while (true) {
+                                canDropDraw = sc.nextInt();
+                                canDropDraw--;
+                                if (players.get(turn).getCards().get(canDropDraw).getType() == CardType.draw) {
+                                    break;
+                                }
+                                System.out.println("NOt Valid :(   ");
 
-                    if(canDropDraw!=-1 && !firstRound)
-                    {
+                            }
+                        }
                         rep.add(current);
-                        current=players.get(turn).getCards().get(canDropDraw);
+                        current = players.get(turn).getCards().get(canDropDraw);
                         players.get(turn).drop(canDropDraw);
-                        drawPenalty+=2;
-                        
+                        drawPenalty += 2;
+
                         tc.tchange();
+
                         continue;
-                        
+
                     }
                 }
-                if(drawPenalty==4)
-                {
-                    
-                    int canDropWildDraw=players.get(turn).canDropWildDraw();
-                    if(canDropWildDraw!=-1)
-                    {
+                if (drawPenalty == 4) {
+
+                    int canDropWildDraw = players.get(turn).canDropWildDraw();
+                    if (canDropWildDraw != -1) {
+
+                        if (turn == 0) {
+                            System.out.println("Press Enter to use one of your wild draw cards");
+                            sc.nextLine();
+                        }
+
                         rep.add(current);
-                        current=players.get(turn).getCards().get(canDropWildDraw);
+                        current = players.get(turn).getCards().get(canDropWildDraw);
                         players.get(turn).drop(canDropWildDraw);
-                        drawPenalty+=4;
+                        drawPenalty += 4;
                         tc.tchange();
                         continue;
-                        
+
                     }
                 }
+                System.out.println("You get a penalty !!!");
                 for (int i = 0; i < drawPenalty; i++) {
                     players.get(turn).addCard(rep);
-                } 
-                drawPenalty=0;
-                firstRound=false;
-
+                }
+                drawPenalty = 0;
+                firstRound = false;
 
             }
-            
-            
-            firstRound=false;
-            
-            
-            if(skip)
-            {
-                skip=false;
-                
+
+            firstRound = false;
+
+            if (skip) {
+                skip = false;
+
                 tc.tchange();
                 continue;
             }
-            // if(turn==0)
-            // {
-            //     //Main Player of the Game
-            // }
-            // else
-            {
-                boolean cantOnce=false;
+            if (turn == 0) {
+                // Main Player of the Game
+                boolean cantOnce = false;
                 while (true) {
-                    
-                    //computer dicision
-                    int cardIndex=players.get(turn).canDrop(current);
-                    if(cardIndex!=-1)
-                    {
-                        System.out.println("you can drop");
-                        Card droppeCard=players.get(turn).getCards().get(cardIndex);
-                        droppeCard.action();
+                    int cardIndex = players.get(turn).canDrop(current);
+                    if (cardIndex != -1) {
+                        System.out.println("You can Drop a card");
+                        System.out.print("Enter a Number between 1 to " +
+                         players.get(turn).getCards().size()+ " :");
 
 
 
-                        switch(droppeCard.getType())
-                        {
-                        case wildDraw:
-                        drawPenalty=4;
-                        skip=true;
-                        break;
-                        
-                        case draw:
-                        drawPenalty=2;
-                        skip=true;
-                        break;
-                        
-                        case reverse:
-                        tc.reverse();
-                        break;
-                        
-                        case skip:
-                        tc.tchange();
-                        break;
-                        
-                        
-                        
-                        default:
-                        break;
-                        
+                        cardIndex = sc.nextInt() - 1;
+                        if (players.get(0).isPossibleToDrop(cardIndex, current)) {
+                            Card droppeCard = players.get(turn).getCards().get(cardIndex);
+
+                            switch (droppeCard.getType()) {
+                                case wildDraw:
+                                    drawPenalty = 4;
+                                    skip = true;
+                                    break;
+
+                                case draw:
+                                    drawPenalty = 2;
+                                    skip = true;
+                                    break;
+
+                                case reverse:
+                                    tc.reverse();
+                                    break;
+
+                                case skip:
+                                    tc.tchange();
+                                    break;
+
+                                default:
+                                    break;
+
+                            }
+                            rep.add(current);
+                            current = droppeCard;
+                            players.get(turn).drop(cardIndex);
+                            break;
+                        } else {
+                            System.out.println("NOt Possible :)");
+                        }
+
                     }
-                    rep.add(current);
-                    current=droppeCard;
-                    players.get(turn).drop(cardIndex);
-                    break;
+                    else
+                    {
+                        
+                        if (cantOnce)
+                            break;
+                        System.out.println("you can't drop any");
+                        // add a random
+                        players.get(turn).addCard(rep);
+
+                        cantOnce = true;
+                        System.out.println("You recived this card");
+                        players.get(turn).getCards().get(players.get(turn).getCards().size() - 1).Print();
+                        ;
+                        System.out.println("00000000000000000000000000000000000");
+                        continue;
+                    }
+                
                 }
-                else
-                {
-                    if(cantOnce)
+            } else {
+                boolean cantOnce = false;
+                while (true) {
+
+                    // computer dicision
+                    int cardIndex = players.get(turn).canDrop(current);
+                    if (cardIndex != -1) {
+                        // System.out.println("you can drop");
+                        Card droppeCard = players.get(turn).getCards().get(cardIndex);
+
+                        switch (droppeCard.getType()) {
+                            case wildDraw:
+                                drawPenalty = 4;
+                                skip = true;
+                                break;
+
+                            case draw:
+                                drawPenalty = 2;
+                                skip = true;
+                                break;
+
+                            case reverse:
+                                tc.reverse();
+                                break;
+
+                            case skip:
+                                tc.tchange();
+                                break;
+
+                            default:
+                                break;
+
+                        }
+                        rep.add(current);
+                        current = droppeCard;
+                        players.get(turn).drop(cardIndex);
                         break;
-                    System.out.println("you can't drop any");
-                    //add a random
-                    players.get(turn).addCard(rep);
+                    } else {
+                        if (cantOnce)
+                            break;
+                        System.out.println("you can't drop any");
+                        // add a random
+                        players.get(turn).addCard(rep);
 
-                    cantOnce=true;
-                    System.out.println("You recived this card");
-                    players.get(turn).getCards().get(players.get(turn).getCards().size()-1).Print();;
-                    System.out.println();
-                    continue;
+                        cantOnce = true;
+                        System.out.println("You recived this card");
+                        players.get(turn).getCards().get(players.get(turn).getCards().size() - 1).Print();
+                        ;
+                        System.out.println();
+                        continue;
 
-                    
+                    }
                 }
+
             }
 
-
-                
-                
-            }
-
-            //change turns
+            // change turns
             tc.tchange();
 
-
-
-           // sc.nextLine();
+            // sc.nextLine();
 
         }
-        
-        
 
     }
 }

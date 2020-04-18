@@ -19,15 +19,15 @@ public class WildCard extends Card {
     public void Print() {
         if(type==CardType.wild){
 
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("     $$$$$$$$$$$$$$$$$$$");
             System.out.println("          Wild("+color+")        ");
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("     $$$$$$$$$$$$$$$$$$$");
         }else
         {
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("       $$$$$$$$$$$$$$$$$$");
             System.out.println("           Wild("+color+")  ");
             System.out.println("           Draw   ");
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
+            System.out.println("       $$$$$$$$$$$$$$$$$$");
         
         }
 
