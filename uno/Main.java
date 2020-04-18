@@ -62,6 +62,24 @@ public class Main{
         boolean skip=false;
         boolean hasEnded=false;
         
+        switch(current.getType())
+        {
+            case draw:
+                        drawPenalty=2;
+                        skip=true;
+                        break;
+                        
+                        case reverse:
+                        tc.reverse();
+                        break;
+                        
+                        case skip:
+                        tc.tchange();
+                        break;
+                    default:
+                        break;
+
+        }
 
 
         while(!hasEnded)
