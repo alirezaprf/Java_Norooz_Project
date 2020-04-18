@@ -124,8 +124,10 @@ public class Player {
     }
     public void printCards()
     {
+        int i=1;
         for (Card card : cards) {
-            System.out.print(card);
+            System.out.print(i + "."+card);
+            i++;
         }
     }
     

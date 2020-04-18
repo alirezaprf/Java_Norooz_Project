@@ -10,7 +10,7 @@ public class Main{
         Scanner sc=new Scanner(System.in);
         
 
-        int playersSize=2;
+        int playersSize=4;
         ArrayList<Card> rep=new ArrayList<>();
         ArrayList<Player> players=new ArrayList<Player>();
         
@@ -46,6 +46,7 @@ public class Main{
 
 
         Card current;
+        boolean firstRound=true;
         while (true) {
             
             int randi=random.nextInt(rep.size());
@@ -82,13 +83,20 @@ public class Main{
         }
 
 
+
+
+
+
+
+        ///main game play 
+        ////***************************** */
         while(!hasEnded)
         {
             current.Print();
             System.out.println("\n\n");
             for (int i = 0; i < players.size(); i++) {
                 players.get(i).printCards();
-                System.out.println("\n____________________________________________");
+                System.out.println("\n___________________________________________\n");
             }
             
             
@@ -121,8 +129,9 @@ public class Main{
                     //current card is draw
                     int canDropDraw=players.get(turn).canDropDraw();
 
-                    if(canDropDraw!=-1)
+                    if(canDropDraw!=-1 && !firstRound)
                     {
+                        rep.add(current);
                         current=players.get(turn).getCards().get(canDropDraw);
                         players.get(turn).drop(canDropDraw);
                         drawPenalty+=2;
@@ -138,6 +147,7 @@ public class Main{
                     int canDropWildDraw=players.get(turn).canDropWildDraw();
                     if(canDropWildDraw!=-1)
                     {
+                        rep.add(current);
                         current=players.get(turn).getCards().get(canDropWildDraw);
                         players.get(turn).drop(canDropWildDraw);
                         drawPenalty+=4;
@@ -150,12 +160,19 @@ public class Main{
                     players.get(turn).addCard(rep);
                 } 
                 drawPenalty=0;
+                firstRound=false;
 
 
             }
+            
+            
+            firstRound=false;
+            
+            
             if(skip)
             {
                 skip=false;
+                
                 tc.tchange();
                 continue;
             }
@@ -175,6 +192,9 @@ public class Main{
                         System.out.println("you can drop");
                         Card droppeCard=players.get(turn).getCards().get(cardIndex);
                         droppeCard.action();
+
+
+
                         switch(droppeCard.getType())
                         {
                         case wildDraw:
@@ -201,6 +221,7 @@ public class Main{
                         break;
                         
                     }
+                    rep.add(current);
                     current=droppeCard;
                     players.get(turn).drop(cardIndex);
                     break;
@@ -214,7 +235,9 @@ public class Main{
                     players.get(turn).addCard(rep);
 
                     cantOnce=true;
+                    System.out.println("You recived this card");
                     players.get(turn).getCards().get(players.get(turn).getCards().size()-1).Print();;
+                    System.out.println();
                     continue;
 
                     

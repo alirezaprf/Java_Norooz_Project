@@ -78,8 +78,8 @@ public class NormalCard extends Card {
     }
     @Override
     public String toString() {
-        String s=type==CardType.numeric?color+"-"+number+" | ":color+" | ";
-        return super.toString()+s;
+        String s=type==CardType.numeric?color+"-"+number+" | " : super.toString()+color+" | ";
+        return s;
     }
 
     @Override
