@@ -51,4 +51,9 @@ public abstract class Card {
         
         return type.name()+"-";
     }
+
+    public void setColor(Colors c)
+    {
+        color=c;
+    }
 }

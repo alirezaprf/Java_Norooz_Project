@@ -38,6 +38,7 @@ public class WildCard extends Card {
     }
     @Override
     public void action() {
+        if(color==Colors.Black)
         randomColor();
     }
     public void randomColor()

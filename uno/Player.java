@@ -3,13 +3,22 @@ import java.util.Random;
 
 public class Player {
     private ArrayList<Card> cards;
-
+    private PlayerTypes type=PlayerTypes.Bot;
 
     public Player()
     {
         cards=new ArrayList<>();
     }
-
+    public Player(PlayerTypes Type)
+    {
+        cards=new ArrayList<>();
+        type=Type;
+    }
+    public PlayerTypes type()
+    {
+        return type;
+    }
+    
     /**
      * 
      * @param card adds the Card to list 

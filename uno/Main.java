@@ -10,6 +10,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int playersSize = 3;
+        
+        System.out.println("Enter number of players");
+        playersSize=sc.nextInt();
         ArrayList<Card> rep = new ArrayList<>();
         ArrayList<Player> players = new ArrayList<Player>();
 
@@ -32,7 +35,11 @@ public class Main {
         }
         Random random = new Random();
         for (int i = 0; i < playersSize; i++) {
-            Player p = new Player();
+            System.out.println("type 0 if player is human");
+            PlayerTypes playerType=PlayerTypes.Bot;
+            if(sc.nextLine().contains("0"))
+                playerType=PlayerTypes.Human;
+            Player p = new Player(playerType);
             for (int j = 0; j < 7; j++) {
                 p.addCard(rep);
             }
@@ -113,7 +120,7 @@ public class Main {
 
 
 
-
+            
 
             if (drawPenalty > 0) {
                 if (drawPenalty == 2) {
@@ -122,7 +129,7 @@ public class Main {
 
                     if (canDropDraw != -1 && !firstRound) {
                         // custom desicion for himan player
-                        if (turn == 0) {
+                        if (players.get(turn).type()==PlayerTypes.Human) {
                             System.out.println("You can Drop a draw card ");
                             System.out.print("Enter a Number (number of a Draw card) between 1 to "
                                     + players.get(turn).getCards().size()+ " :") ;
@@ -131,6 +138,7 @@ public class Main {
                                 canDropDraw--;
                                 if (players.get(turn).getCards().get(canDropDraw).getType() == CardType.draw) {
                                     {
+                                        
                                         break;
                                     }
                                 }
@@ -153,10 +161,23 @@ public class Main {
 
                     int canDropWildDraw = players.get(turn).canDropWildDraw();
                     if (canDropWildDraw != -1) {
+                        int colorIndex=1;
+                        if (players.get(turn).type()==PlayerTypes.Human) {
 
-                        if (turn == 0) {
-                            System.out.println("Press Enter to use one of your wild draw cards");
-                            sc.nextLine();
+                            System.out.println("Choose a color use one of your wild draw cards");
+                            System.out.println("1.Red 2.Green 3.Blue 4.Yellow");
+                            colorIndex=sc.nextInt()-1;
+                            if(colorIndex>0 && colorIndex<4)
+                            {
+                                players.get(turn).getCards().get(canDropWildDraw).setColor(
+                                    Colors.values()[colorIndex]);
+                            }
+                            else
+                            {
+                                System.out.println("Wrong answer We'll go with green");
+                                players.get(turn).getCards().get(canDropWildDraw).setColor(
+                                    Colors.values()[1]);
+                            }
                         }
 
                         rep.add(current);
@@ -185,7 +206,7 @@ public class Main {
                 tc.tchange();
                 continue;
             }
-            if (turn == 0) {
+            if (players.get(turn).type()==PlayerTypes.Human) {
                 // Main Player of the Game
                 boolean cantOnce = false;
                 while (true) {
@@ -200,12 +221,27 @@ public class Main {
                         cardIndex = sc.nextInt() - 1;
                         if (players.get(0).isPossibleToDrop(cardIndex, current)) {
                             Card droppeCard = players.get(turn).getCards().get(cardIndex);
-
+                            int colorIndex;
                             switch (droppeCard.getType()) {
                                 case wildDraw:
-                                    drawPenalty = 4;
-                                    skip = true;
-                                    break;
+                                System.out.println("Choose a color use one of your wild draw cards");
+                                System.out.println("1.Red 2.Green 3.Blue 4.Yellow");
+                                colorIndex=sc.nextInt()-1;
+                                if(colorIndex>0 && colorIndex<4)
+                                {
+                                    droppeCard.setColor(
+                                        Colors.values()[colorIndex]);
+                                }
+                                else
+                                {
+                                    System.out.println("Wrong answer We'll go with green");
+                                    droppeCard.setColor(
+                                        Colors.values()[1]);
+                                }
+                            
+                                drawPenalty = 4;
+                                skip = true;
+                                break;
 
                                 case draw:
                                     drawPenalty = 2;
@@ -220,6 +256,22 @@ public class Main {
                                     tc.tchange();
                                     break;
 
+                                case wild:
+                                System.out.println("Choose a color use one of your wild cards");
+                                System.out.println("1.Red 2.Green 3.Blue 4.Yellow");
+                                colorIndex=sc.nextInt()-1;
+                                if(colorIndex>0 && colorIndex<4)
+                                {
+                                    droppeCard.setColor(
+                                        Colors.values()[colorIndex]);
+                                }
+                                else
+                                {
+                                    System.out.println("Wrong answer We'll go with green");
+                                    droppeCard.setColor(
+                                        Colors.values()[1]);
+                                }
+                                break;
                                 default:
                                     break;
 
