@@ -9,16 +9,36 @@ public class Player {
     {
         cards=new ArrayList<>();
     }
+    /**
+     * 
+     * @param Type type of the player
+     */
     public Player(PlayerTypes Type)
     {
         cards=new ArrayList<>();
         type=Type;
     }
+
+    /**
+     * 
+     * @return type of the player
+     */
     public PlayerTypes type()
     {
         return type;
     }
     
+    /**
+     * get 7 radnom cards from repository of cards
+     * @param rep is reposittory of cards
+     */
+    public void Initialize(ArrayList<Card> rep)
+    {
+        for (int j = 0; j < 2; j++) {
+            addCard(rep);
+        }
+    }
+
     /**
      * 
      * @param card adds the Card to list 

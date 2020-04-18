@@ -35,14 +35,12 @@ public class Main {
         }
         Random random = new Random();
         for (int i = 0; i < playersSize; i++) {
-            System.out.println("type 0 if player is human");
+            System.out.println("type 0 if player"+(i+1)+" is human or type a number if it's bot");
             PlayerTypes playerType=PlayerTypes.Bot;
-            if(sc.nextLine().contains("0"))
+            if(sc.nextInt()==0)
                 playerType=PlayerTypes.Human;
             Player p = new Player(playerType);
-            for (int j = 0; j < 7; j++) {
-                p.addCard(rep);
-            }
+            p.Initialize(rep);
             players.add(p);
 
         }
@@ -93,11 +91,18 @@ public class Main {
         /// main game play
         //// ***************************** */
         while (!hasEnded) {
+            System.out.println("\n↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n");
+            int turn = tc.turn();
             System.out.println("Current Card is :");
             current.Print();
             System.out.println("====>                             ");
             System.out.println("     ====>                             ");
             for (int i = 0; i < players.size(); i++) {
+                if(i==turn)
+                System.out.print(" (*) ");
+                else
+                System.out.print(" () ");
+                
                 players.get(i).printCards();
                 System.out.println("\n___________________________________________\n");
             }
@@ -112,11 +117,14 @@ public class Main {
             if (hasEnded)
                 break;
 
-            int turn = tc.turn();
+            
             System.out.println("player " + (turn + 1) + " :");
             
-            System.out.println("type something and press Enter to go on");
-            sc.next();
+            if(players.get(turn).type()==PlayerTypes.Bot)
+            {
+                System.out.println("(Bot)type something and press Enter to go on");
+                sc.next();
+            }
 
 
 
@@ -219,7 +227,7 @@ public class Main {
 
 
                         cardIndex = sc.nextInt() - 1;
-                        if (players.get(0).isPossibleToDrop(cardIndex, current)) {
+                        if (players.get(turn).isPossibleToDrop(cardIndex, current)) {
                             Card droppeCard = players.get(turn).getCards().get(cardIndex);
                             int colorIndex;
                             switch (droppeCard.getType()) {
@@ -298,7 +306,7 @@ public class Main {
                         System.out.println("You recived this card");
                         players.get(turn).getCards().get(players.get(turn).getCards().size() - 1).Print();
                         ;
-                        System.out.println("00000000000000000000000000000000000");
+                        System.out.println("\n\n");
                         continue;
                     }
                 
