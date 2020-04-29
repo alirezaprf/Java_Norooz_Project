@@ -178,7 +178,7 @@ public class Main {
                             System.out.println("Choose a color use one of your wild draw cards");
                             System.out.println("1.Red 2.Green 3.Blue 4.Yellow");
                             colorIndex=sc.nextInt()-1;
-                            if(colorIndex>0 && colorIndex<4)
+                            if(colorIndex>=0 && colorIndex<4)
                             {
                                 players.get(turn).getCards().get(canDropWildDraw).setColor(
                                     Colors.values()[colorIndex]);
