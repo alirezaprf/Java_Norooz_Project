@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.io.PrintStream;
 import java.lang.System;
 
 public class Main {
@@ -376,6 +375,6 @@ public class Main {
             // sc.nextLine();
 
         }
-
+        sc.close();
     }
 }
