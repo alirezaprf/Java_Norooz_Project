@@ -90,7 +90,10 @@ public class Main {
 
         /// main game play
         //// ***************************** */
+        
         while (!hasEnded) {
+            
+            
             System.out.printf("\n↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓  %s ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n\n",tc.getState());
             int turn = tc.turn();
             System.out.println("Current Card is :");
