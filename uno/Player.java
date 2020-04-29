@@ -34,7 +34,7 @@ public class Player {
      */
     public void Initialize(ArrayList<Card> rep)
     {
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < 7; j++) {
             addCard(rep);
         }
     }

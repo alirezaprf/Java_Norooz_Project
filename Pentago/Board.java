@@ -139,6 +139,7 @@ public class Board {
                                 victory=true;
                                 frame.setTitle("Finished "+Winner+" Won");
                                 System.out.println("Finished "+Winner+" Won");
+                                print();
                                 //System.exit(0);
                             }
                             if(counter==36)
