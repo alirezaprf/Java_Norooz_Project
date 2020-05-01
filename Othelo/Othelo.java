@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class Othelo {
@@ -90,6 +91,10 @@ public class Othelo {
                     short valids=0;
                     short whites=0,blacks=0;
                     playerType = playerTurn ? 1 : 2;
+
+
+                   
+
                     for (int y = 0; y < 8; y++) {
                         for (int x = 0; x < 8; x++) {
                             //counting blacks and whites 
